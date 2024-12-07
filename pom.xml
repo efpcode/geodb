@@ -6,6 +6,9 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>databasefromjava</name>
+  <modules>
+    <module>hibernate</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
