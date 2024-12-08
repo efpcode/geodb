@@ -67,6 +67,24 @@ public class Main {
             cityDTOs.forEach(System.out::println);
         });
 
+        // Demonstrate Native SQL Query
+        sessionFactory.inTransaction(session -> {
+            List<City> nativeResults = session.createNativeQuery(
+                            "SELECT c.id, c.city_name, c.population, c.country_code " +
+                            "FROM city c " +
+                            "WHERE c.country_code = :countryCode", City.class)
+                    .setParameter("countryCode", "se")
+                    .getResultList();
+
+            System.out.println("Native SQL Query Results:");
+            nativeResults.forEach(row ->
+                    System.out.println("City: " + row.getCityName() +
+                                       ", Population: " + row.getPopulation())
+            );
+        });
+
+
+
 
     }
 }
