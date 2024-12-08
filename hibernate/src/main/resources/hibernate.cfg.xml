@@ -19,9 +19,10 @@
         <property name="hibernate.hbm2ddl.auto">validate</property>
 
         <!-- Custom naming conversions between entities and database -->
-<!--        <property name="hibernate.physical_naming_strategy">com.example.CompositeNamingStrategy</property>-->
+        <!--        <property name="hibernate.physical_naming_strategy">com.example.CompositeNamingStrategy</property>-->
 
         <!-- Specify annotated classes -->
         <mapping class="se.iths.java24.Country"/>
+        <mapping class="se.iths.java24.City"/>
     </session-factory>
 </hibernate-configuration>
