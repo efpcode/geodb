@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/demo</property>
+        <property name="hibernate.connection.username">user</property>
+        <property name="hibernate.connection.password">password</property>
+
+        <!-- Echo all executed SQL to console -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.highlight_sql">true</property>
+
+        <!-- Automatically export the schema -->
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+
+        <!-- Custom naming conversions between entities and database -->
+<!--        <property name="hibernate.physical_naming_strategy">com.example.CompositeNamingStrategy</property>-->
+
+        <!-- Specify annotated classes -->
+        <mapping class="se.iths.java24.Country"/>
+    </session-factory>
+</hibernate-configuration>
