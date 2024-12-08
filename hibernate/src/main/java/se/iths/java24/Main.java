@@ -83,8 +83,21 @@ public class Main {
             );
         });
 
+        // Demonstrate Entity Graph, avoid N+1 problem
+        sessionFactory.inTransaction(session -> {
+            // Create an entity graph
+            var entityGraph = session.createEntityGraph(City.class);
+            entityGraph.addAttributeNodes("country");
 
+            List<City> citiesWithCountry = session.createSelectionQuery("FROM City c", City.class)
+                    .setHint("jakarta.persistence.fetchgraph", entityGraph)
+                    .getResultList();
 
+            System.out.println("Cities with Eager Loaded Country:");
+            citiesWithCountry.forEach(city ->
+                    System.out.println(city.getCityName() + " in " + city.getCountry().getCountryName())
+            );
+        });
 
     }
 }
