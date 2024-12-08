@@ -28,7 +28,8 @@ public class Main {
 
                 // 2. Read (Find)
                 System.out.println("Cities in Sweden:");
-                session.createSelectionQuery("from City c where c.country.countryCode = 'se'", City.class)
+                session.createSelectionQuery("from City c where c.country.countryCode = :countryCode", City.class)
+                        .setParameter("countryCode", "se")
                         .getResultList()
                         .forEach(System.out::println);
 
