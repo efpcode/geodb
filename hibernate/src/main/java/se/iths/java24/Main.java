@@ -1,5 +1,7 @@
 package se.iths.java24;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -10,11 +12,11 @@ public class Main {
                             .list().forEach(System.out::println);
                 });
 
+        // Get session factory
+        var sessionFactory = HibernateUtil.getSessionFactory();
+
         // Demonstrate various Hibernate operations
         try {
-            // Get session factory
-            var sessionFactory = HibernateUtil.getSessionFactory();
-
             // Demonstrate CRUD operations
             sessionFactory.inTransaction(session -> {
                 // 1. Create (Persist)
@@ -53,6 +55,17 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Demonstrate Projection to DTO
+        sessionFactory.inTransaction(session -> {
+            List<CityDTO> cityDTOs = session.createSelectionQuery(
+                            "SELECT new se.iths.java24.CityDTO(c.cityName, c.country.countryName, c.population) FROM City c",
+                            CityDTO.class)
+                    .getResultList();
+
+            System.out.println("City DTOs:");
+            cityDTOs.forEach(System.out::println);
+        });
 
 
     }
