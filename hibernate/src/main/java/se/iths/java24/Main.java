@@ -41,14 +41,14 @@ public class Main {
 
                 if (copenhagen != null) {
                     // Update the population
-                    copenhagen.setPopulation(620000);
+                    copenhagen.setPopulation(copenhagen.getPopulation() + 1);
                     session.merge(copenhagen);
                 } else {
                     System.out.println("Copenhagen not found in the database.");
                 }
 
-                // 4. Delete
-                City cityToDelete = session.createSelectionQuery("FROM City c WHERE c.cityName = 'Aarhus'", City.class)
+                // 4. Delete what we created
+                City cityToDelete = session.createSelectionQuery("FROM City c WHERE c.cityName = 'Västerås' OR c.cityName = 'Uppsala'", City.class)
                         .getSingleResult();
                 session.remove(cityToDelete);
             });
