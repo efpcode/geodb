@@ -8,6 +8,7 @@
   <name>databasefromjava</name>
   <modules>
     <module>hibernate</module>
+    <module>jpa</module>
   </modules>
 
   <properties>
