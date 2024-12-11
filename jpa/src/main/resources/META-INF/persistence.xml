@@ -19,4 +19,5 @@
             <property name="hibernate.highlight_sql" value="true"/>
         </properties>
     </persistence-unit>
+    
 </persistence>
