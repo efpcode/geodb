@@ -1,9 +1,6 @@
 package se.iths.java24;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "country", schema = "demo")
@@ -14,6 +11,14 @@ public class Country {
 
     @Column(name = "country_name")
     private String countryName;
+
+    @Transient
+    private String threeLetterName;
+
+    public String getThreeLetterName() {
+        return threeLetterName;
+    }
+
 
     public String getCountryCode() {
         return countryCode;
@@ -37,5 +42,10 @@ public class Country {
                "countryCode='" + countryCode + '\'' +
                ", countryName='" + countryName + '\'' +
                '}';
+    }
+
+    @PostLoad
+    public void postLoad() {
+        threeLetterName = countryName.substring(0, 3);
     }
 }

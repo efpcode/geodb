@@ -62,6 +62,12 @@ public class Main {
             if (poland != null)
                 entityManager.remove(poland);
         });
+
+        inTransaction(entityManager -> {
+            var country1 = entityManager.find(Country.class,"se");
+            System.out.println(country1.getThreeLetterName());
+        });
+
     }
 
 
