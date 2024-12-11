@@ -2,6 +2,9 @@ package se.iths.java24;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "country", schema = "demo")
 public class Country {
@@ -15,9 +18,14 @@ public class Country {
     @Transient
     private String threeLetterName;
 
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    private List<City> cities = new ArrayList<>();
+
+
     public String getThreeLetterName() {
         return threeLetterName;
     }
+
 
 
     public String getCountryCode() {
@@ -41,6 +49,8 @@ public class Country {
         return "Country{" +
                "countryCode='" + countryCode + '\'' +
                ", countryName='" + countryName + '\'' +
+               ", threeLetterName='" + threeLetterName + '\'' +
+               ", cities=" + cities +
                '}';
     }
 

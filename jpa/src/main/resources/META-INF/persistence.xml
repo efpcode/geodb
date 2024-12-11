@@ -5,6 +5,7 @@
     <persistence-unit name="jpa-hibernate-mysql">
 
         <class>se.iths.java24.Country</class>
+        <class>se.iths.java24.City</class>
 
         <properties>
             <!-- Database connection settings -->
@@ -19,5 +20,5 @@
             <property name="hibernate.highlight_sql" value="true"/>
         </properties>
     </persistence-unit>
-    
+
 </persistence>

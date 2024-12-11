@@ -68,6 +68,11 @@ public class Main {
             System.out.println(country1.getThreeLetterName());
         });
 
+        inTransaction(entityManager -> {
+            var c = entityManager.createQuery("SELECT c FROM Country c", Country.class).getResultList();
+            c.forEach(System.out::println);
+        });
+
     }
 
 

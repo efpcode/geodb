@@ -10,19 +10,15 @@ public class City {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @jakarta.validation.constraints.Size(max = 255)
-    @jakarta.validation.constraints.NotNull
     @Column(name = "city_name", nullable = false)
     private String cityName;
 
-    @jakarta.validation.constraints.NotNull
     @Column(name = "population", nullable = false)
     private Integer population;
 
-    @jakarta.validation.constraints.NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "country_code", nullable = false)
-    private Country countryCode;
+    private Country country;
 
     public Long getId() {
         return id;
@@ -48,12 +44,20 @@ public class City {
         this.population = population;
     }
 
-    public Country getCountryCode() {
-        return countryCode;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCountryCode(Country countryCode) {
-        this.countryCode = countryCode;
+    public void setCountry(Country countryCode) {
+        this.country = countryCode;
     }
 
+    @Override
+    public String toString() {
+        return "City{" +
+               "id=" + id +
+               ", cityName='" + cityName + '\'' +
+               ", population=" + population +
+               '}';
+    }
 }
