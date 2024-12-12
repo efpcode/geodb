@@ -7,6 +7,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "country", schema = "demo")
+@NamedEntityGraph(name = "Country.cities",
+        attributeNodes = @NamedAttributeNode("cities"))
 public class Country {
     @Id
     @Column(name = "country_code", nullable = false)
@@ -25,7 +27,6 @@ public class Country {
     public String getThreeLetterName() {
         return threeLetterName;
     }
-
 
 
     public String getCountryCode() {

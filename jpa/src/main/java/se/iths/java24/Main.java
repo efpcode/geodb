@@ -64,14 +64,38 @@ public class Main {
         });
 
         inTransaction(entityManager -> {
-            var country1 = entityManager.find(Country.class,"se");
+            var country1 = entityManager.find(Country.class, "se");
             System.out.println(country1.getThreeLetterName());
         });
 
+        //Use JOIN FETCH to prevent N + 1 problem
         inTransaction(entityManager -> {
-            var c = entityManager.createQuery("SELECT c FROM Country c", Country.class).getResultList();
+            var c = entityManager.createQuery("SELECT c FROM Country c JOIN FETCH c.cities", Country.class)
+                    .getResultList();
             c.forEach(System.out::println);
         });
+
+        //Named entity graph to prevent N + 1 problem, defined in Entity class
+        inTransaction(entityManager -> {
+            var eg = entityManager.getEntityGraph("Country.cities");
+
+            var c = entityManager.createQuery("SELECT c FROM Country c", Country.class)
+                    .setHint("jakarta.persistence.fetchgraph", eg)
+                    .getResultList();
+            c.forEach(System.out::println);
+        });
+
+        //Create entity graph using code.
+        inTransaction(entityManager -> {
+            var eg = entityManager.createEntityGraph("custom-graph");
+            eg.addAttributeNodes("cities");
+
+            var c = entityManager.createQuery("SELECT c FROM Country c", Country.class)
+                    .setHint("jakarta.persistence.fetchgraph", eg)
+                    .getResultList();
+            c.forEach(System.out::println);
+        });
+
 
     }
 
