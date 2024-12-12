@@ -11,6 +11,7 @@ public class Main {
         EntityManager em = getEntityManager();
         Cities cities = new Cities();
         //Ask user for information
+        System.out.println("Add city to country");
         cities.addCityToCountry("Kalmar", 60000, "Sweden");
 
 //        System.out.print("Enter search term: ");

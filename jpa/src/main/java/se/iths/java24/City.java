@@ -48,8 +48,9 @@ public class City {
         return country;
     }
 
-    public void setCountry(Country countryCode) {
-        this.country = countryCode;
+    public void setCountry(Country country) {
+        this.country = country;
+        country.getCities().add(this);
     }
 
     @Override

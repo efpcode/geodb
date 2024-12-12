@@ -23,7 +23,9 @@ public class Country {
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private List<City> cities = new ArrayList<>();
 
-
+    public List<City> getCities() {
+        return cities;
+    }
     public String getThreeLetterName() {
         return threeLetterName;
     }
