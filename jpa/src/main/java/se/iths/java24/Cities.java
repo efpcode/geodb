@@ -32,9 +32,12 @@ public class Cities {
     }
 
     public List<CitiesWithHighPopulation> citiesWithMorePopulationThan(int minpopulation) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException("Not yet implemented. Should be implemented as a JPQL query");
     }
 
+    public void deleteCitiesWithoutACountry() {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
 
 }
 
