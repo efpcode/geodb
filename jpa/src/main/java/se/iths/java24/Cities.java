@@ -32,14 +32,22 @@ public class Cities {
     }
 
     public List<CitiesWithHighPopulation> citiesWithMorePopulationThan(int minpopulation) {
-        throw new UnsupportedOperationException("Not yet implemented. Should be implemented as a JPQL query");
+        return cityRepository.allCitiesWithMoreThan(minpopulation).stream().map(city ->
+                new CitiesWithHighPopulation(CityName.of(city.getCityName())
+                        , city.getPopulation())).toList();
     }
 
     public void deleteCitiesWithoutACountry() {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
-
 }
 
-record CitiesWithHighPopulation(String cityName, int population) {
+record CitiesWithHighPopulation(CityName cityName, int population) {
+}
+
+
+record CityName(String name) {
+    static CityName of(String name) {
+        return new CityName(name);
+    }
 }
