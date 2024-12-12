@@ -87,13 +87,20 @@ public class Main {
 
         //Create entity graph using code.
         inTransaction(entityManager -> {
-            var eg = entityManager.createEntityGraph("custom-graph");
+            var eg = entityManager.createEntityGraph(Country.class);
             eg.addAttributeNodes("cities");
 
             var c = entityManager.createQuery("SELECT c FROM Country c", Country.class)
                     .setHint("jakarta.persistence.fetchgraph", eg)
                     .getResultList();
             c.forEach(System.out::println);
+        });
+
+        //Only retrieve what we need
+        inTransaction(entityManager -> {
+           var c = entityManager.createQuery("SELECT c.countryName FROM Country c", String.class)
+                   .getResultList();
+           c.forEach(System.out::println);
         });
 
 
