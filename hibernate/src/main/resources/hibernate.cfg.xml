@@ -22,7 +22,7 @@
         <!--        <property name="hibernate.physical_naming_strategy">com.example.CompositeNamingStrategy</property>-->
 
         <!-- Specify annotated classes -->
-        <mapping class="se.iths.java24.Country"/>
-        <mapping class="se.iths.java24.City"/>
+        <mapping class="se.iths.java24.entity.Country"/>
+        <mapping class="se.iths.java24.entity.City"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,4 +1,4 @@
-package se.iths.java24;
+package se.iths.java24.entity;
 
 import jakarta.persistence.*;
 

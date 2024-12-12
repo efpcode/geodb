@@ -1,6 +1,7 @@
 package se.iths.java24;
 
 import jakarta.persistence.EntityManager;
+import se.iths.java24.entity.Country;
 
 import static se.iths.java24.JPAUtil.getEntityManager;
 import static se.iths.java24.JPAUtil.inTransaction;

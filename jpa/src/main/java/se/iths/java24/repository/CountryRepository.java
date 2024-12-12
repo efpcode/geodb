@@ -1,6 +1,8 @@
-package se.iths.java24;
+package se.iths.java24.repository;
 
 import jakarta.persistence.EntityManager;
+import se.iths.java24.JPAUtil;
+import se.iths.java24.entity.Country;
 
 import java.util.Optional;
 

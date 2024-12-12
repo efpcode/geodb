@@ -19,7 +19,7 @@ public class JPAUtil {
         return emf.createEntityManager();
     }
 
-    static void inTransaction(Consumer<EntityManager> work) {
+    public static void inTransaction(Consumer<EntityManager> work) {
         try (EntityManager entityManager = JPAUtil.getEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
             try {

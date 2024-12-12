@@ -4,8 +4,8 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
     <persistence-unit name="jpa-hibernate-mysql">
 
-        <class>se.iths.java24.Country</class>
-        <class>se.iths.java24.City</class>
+        <class>se.iths.java24.entity.Country</class>
+        <class>se.iths.java24.entity.City</class>
 
         <properties>
             <!-- Database connection settings -->
