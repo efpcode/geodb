@@ -9,6 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
         EntityManager em = getEntityManager();
+        Cities cities = new Cities();
+        //Ask user for information
+        cities.addCityToCountry("Kalmar", 60000, "Sweden");
 
 //        System.out.print("Enter search term: ");
 //        Scanner scanner = new Scanner(System.in);
@@ -98,13 +101,37 @@ public class Main {
 
         //Only retrieve what we need
         inTransaction(entityManager -> {
-           var c = entityManager.createQuery("SELECT c.countryName FROM Country c", String.class)
-                   .getResultList();
-           c.forEach(System.out::println);
+            var c = entityManager.createQuery("SELECT c.countryName FROM Country c", String.class)
+                    .getResultList();
+            c.forEach(System.out::println);
         });
 
+        //Convert selected Entity to dto object
+        inTransaction(entityManager -> {
+            var c = entityManager.createQuery("SELECT c FROM Country c", Country.class)
+                    .getResultList();
+            c.stream().map(country1 ->
+                            new CountryCodeAndName(country1.getCountryCode(),
+                                    country1.getCountryName()))
+                    .forEach(System.out::println);
+        });
+
+        //Select information into dto directly, Projection
+        inTransaction(entityManager -> {
+            var c = entityManager.createQuery("SELECT new se.iths.java24.CountryCodeAndName(c.countryCode, c.countryName)" +
+                                              " FROM Country c", CountryCodeAndName.class)
+                    .getResultList();
+            c.forEach(System.out::println);
+        });
+
+        //Native query, gives us access to full sql
+//        inTransaction(entityManager -> {
+//            var c = entityManager.createNativeQuery("delete from country where country_code='tt'")
+//                    .executeUpdate();
+//        });
 
     }
+
 
 
 }
