@@ -1,8 +1,8 @@
-package se.iths.java24.repository;
+package geodb.repository;
 
 import jakarta.persistence.EntityManager;
-import se.iths.java24.JPAUtil;
-import se.iths.java24.entity.Country;
+import geodb.JPAUtil;
+import geodb.entity.Country;
 
 import java.util.Optional;
 

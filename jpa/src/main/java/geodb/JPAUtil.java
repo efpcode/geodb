@@ -1,4 +1,4 @@
-package se.iths.java24;
+package geodb;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

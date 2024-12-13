@@ -1,8 +1,8 @@
-package se.iths.java24;
+package geodb;
 
-import se.iths.java24.entity.City;
-import se.iths.java24.repository.CityRepository;
-import se.iths.java24.repository.CountryRepository;
+import geodb.entity.City;
+import geodb.repository.CityRepository;
+import geodb.repository.CountryRepository;
 
 import java.util.List;
 

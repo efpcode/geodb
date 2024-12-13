@@ -1,10 +1,10 @@
-package se.iths.java24;
+package geodb;
 
 import jakarta.persistence.EntityManager;
-import se.iths.java24.entity.Country;
+import geodb.entity.Country;
 
-import static se.iths.java24.JPAUtil.getEntityManager;
-import static se.iths.java24.JPAUtil.inTransaction;
+import static geodb.JPAUtil.getEntityManager;
+import static geodb.JPAUtil.inTransaction;
 
 public class Main {
 

@@ -1,11 +1,11 @@
-package se.iths.java24.repository;
+package geodb.repository;
 
-import se.iths.java24.JPAUtil;
-import se.iths.java24.entity.City;
+import geodb.JPAUtil;
+import geodb.entity.City;
 
 import java.util.List;
 
-import static se.iths.java24.JPAUtil.inTransaction;
+import static geodb.JPAUtil.inTransaction;
 
 public class CityRepository {
 

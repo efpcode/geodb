@@ -1,4 +1,4 @@
-package se.iths.java24;
+package geodb;
 
 public record CountryCodeAndName(String countryCode, String countryName) {
 }

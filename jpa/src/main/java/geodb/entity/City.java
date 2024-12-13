@@ -1,4 +1,4 @@
-package se.iths.java24.entity;
+package geodb.entity;
 
 import jakarta.persistence.*;
 
