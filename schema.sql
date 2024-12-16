@@ -1,53 +1,71 @@
-use demo;
+CREATE DATABASE IF NOT EXISTS geodb;
+USE geodb;
 
-create table country
+CREATE TABLE country
 (
-    country_code varchar(255) not null,
-    country_name varchar(255) null,
-    constraint pk_country primary key (country_code)
+    countryID INTEGER NOT NULL AUTO_INCREMENT,
+    countryCode VARCHAR(255) NOT NULL,
+    countryName VARCHAR(255) NOT NULL,
+    countryArea DOUBLE NOT NULL,
+    countryNeighbor VARCHAR(255)NOT NULL DEFAULT 'Island',
+    countryPopulationSize BIGINT NOT NULL,
+    countryDistinct VARCHAR(255) GENERATED ALWAYS AS (CONCAT(countryName, '-',countryCode)),
+    CHECK ( countryArea <= 0),
+    CHECK ( countryPopulationSize <= 0 ),
+    countryCity INTEGER NOT NULL,
+    countryContinent INTEGER NOT NULL,
+    countryCurrency INTEGER NOT NULL,
+    countryLandMark INTEGER NOT NULL,
+    countrySea INTEGER NOT NULL,
+    UNIQUE (countryDistinct),
+    PRIMARY KEY (countryID),
+    FOREIGN KEY (countryCity) REFERENCES city(cityID),
+    FOREIGN KEY (countryContinent) REFERENCES continent(continentID),
+    FOREIGN KEY (countryCurrency) REFERENCES currency(currencyID),
+    FOREIGN KEY (countryLandMark) REFERENCES landmark(landMarkID),
+    FOREIGN KEY (countrySea) REFERENCES sea(seaID)
+
 );
 
-insert into country (country_code, country_name)
-values ('dk', 'Denmark'),
-       ('fi', 'Finland'),
-       ('is', 'Iceland'),
-       ('no', 'Norway'),
-       ('se', 'Sweden');
+CREATE TABLE city(
+    cityID INTEGER NOT NULL AUTO_INCREMENT,
+    cityName VARCHAR(255) NOT NULL,
+    cityPopulationSize BIGINT NOT NULL,
+    cityArea DOUBLE NOT NULL,
+    CHECK ( cityArea <= 0 ),
+    CHECK ( cityPopulationSize <= 0 ),
+    cityCapital BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (cityID)
 
-create table city
-(
-    id           bigint auto_increment not null,
-    city_name    varchar(255)          not null,
-    population   int                   not null,
-    country_code varchar(255)          not null,
-    constraint pk_city primary key (id),
-    constraint fk_city_country foreign key (country_code) references country (country_code)
 );
 
-insert into city (city_name, population, country_code)
-values
-    ('Copenhagen', 602481, 'dk'),
-    ('Aarhus', 282910, 'dk'),
-    ('Odense', 179601, 'dk'),
-    ('Helsinki', 631695, 'fi'),
-    ('Espoo', 283632, 'fi'),
-    ('Tampere', 238140, 'fi'),
-    ('Reykjavik', 131136, 'is'),
-    ('Kopavogur', 36875, 'is'),
-    ('Hafnarfjordur', 29272, 'is'),
-    ('Oslo', 634293, 'no'),
-    ('Bergen', 278556, 'no'),
-    ('Stavanger', 144699, 'no'),
-    ('Stockholm', 975551, 'se'),
-    ('Gothenburg', 583056, 'se'),
-    ('Malmo', 347949, 'se'),
-    ('Uppsala', 233839, 'se'),
-    ('Västerås', 154049, 'se'),
-    ('Örebro', 156381, 'se'),
-    ('Linköping', 164616, 'se'),
-    ('Helsingborg', 149280, 'se'),
-    ('Jönköping', 141081, 'se'),
-    ('Norrköping', 143478, 'se'),
-    ('Lund', 125154, 'se'),
-    ('Umeå', 130224, 'se'),
-    ('Gävle', 102904, 'se');
+CREATE TABLE continent(
+    continentID INTEGER NOT NULL AUTO_INCREMENT,
+    continentName VARCHAR(255) NOT NULL,
+    continentArea DOUBLE NOT NULL,
+    CHECK ( continentArea <= 0 ),
+    PRIMARY KEY (continentID),
+    UNIQUE (continentName)
+
+);
+
+CREATE TABLE  currency(
+    currencyID INTEGER NOT NULL AUTO_INCREMENT,
+    currencyName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (currencyID)
+);
+
+CREATE TABLE landmark(
+    landMarkID INTEGER NOT NULL AUTO_INCREMENT,
+    landMarkName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (landMarkID),
+    UNIQUE (landMarkName)
+);
+
+CREATE TABLE sea(
+    seaID INTEGER NOT NULL AUTO_INCREMENT,
+    seaConnect BOOLEAN NOT NULL DEFAULT FALSE,
+    seaName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (seaID),
+    UNIQUE (seaName)
+);
