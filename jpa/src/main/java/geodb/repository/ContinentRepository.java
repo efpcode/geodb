@@ -7,8 +7,11 @@ import geodb.entity.Continent;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class ContinentRepository implements Crudable {
+
+    private Scanner sc = new Scanner(System.in);
 
     @Override
     public void insertToTable() {
