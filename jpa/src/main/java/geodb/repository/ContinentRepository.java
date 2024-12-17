@@ -5,6 +5,7 @@ import geodb.JPAUtil;
 import geodb.entity.Continent;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -52,17 +53,25 @@ public class ContinentRepository implements Crudable {
 
     @Override
     public void deleteRowInTable() {
-        JPAUtil.inTransaction(entityManager -> {
-            Continent continent = entityManager.createQuery(
-                            "SELECT c FROM Continent c WHERE c.continentName = :name", Continent.class)
-                    .setParameter("name", "Asia")
-                    .getSingleResult();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the name of the continent you want to delete:");
+        String continentName = sc.nextLine();
 
-            if (continent != null) {
-                entityManager.remove(continent);
-                System.out.println("Continent deleted: " + continent);
-            } else {
-                System.out.println("Continent not found to delete.");
+        JPAUtil.inTransaction(entityManager -> {
+            try {
+                Continent continent = entityManager.createQuery(
+                                "SELECT c FROM Continent c WHERE c.continentName = :name", Continent.class)
+                        .setParameter("name", continentName)
+                        .getSingleResult();
+
+                if (continent != null) {
+                    entityManager.remove(continent);
+                    System.out.println("Continent deleted: " + continent);
+                }
+            } catch (NoResultException e) {
+                System.out.println("Continent not found: " + continentName);
+            } catch (Exception e) {
+                System.out.println("An error occurred while deleting the continent: " + e.getMessage());
             }
         });
     }
