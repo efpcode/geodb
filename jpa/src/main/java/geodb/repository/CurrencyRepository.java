@@ -41,7 +41,7 @@ public class CurrencyRepository implements Crudable {
      * and regular space.
      * </p>
      *
-     * @param currencyName String passed for checking against regex.
+     * @param currencyName String passed for evaluation against regex.
      * @return 'true' if regex pattern is matched, otherwise 'false'.
      */
     private boolean isAlpha(String currencyName) {
