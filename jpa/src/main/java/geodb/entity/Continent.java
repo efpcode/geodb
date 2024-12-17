@@ -40,4 +40,12 @@ public class Continent {
         this.continentArea = continentArea;
     }
 
+    @Override
+    public String toString() {
+        return "Continent{" +
+                "id=" + id +
+                ", continentName='" + continentName + '\'' +
+                ", continentArea=" + continentArea +
+                '}';
+    }
 }
