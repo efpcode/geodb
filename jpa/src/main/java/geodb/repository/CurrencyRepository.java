@@ -42,7 +42,7 @@ public class CurrencyRepository implements Crudable {
      * </p>
      *
      * @param currencyName String passed for evaluation against regex.
-     * @return 'true' if regex pattern is matched, otherwise 'false'.
+     * @return boolean 'true' if regex pattern is matched, otherwise 'false'.
      */
     private boolean isAlpha(String currencyName) {
         Pattern isAlpha = Pattern.compile("[a-zA-Z ]+");
