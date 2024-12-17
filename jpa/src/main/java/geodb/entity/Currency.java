@@ -1,10 +1,13 @@
 package geodb.entity;
 
+import geodb.Crudable;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "currency", schema = "geodb")
-public class Currency {
+public class Currency implements Crudable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currencyID", nullable = false)
@@ -29,4 +32,23 @@ public class Currency {
         this.currencyName = currencyName;
     }
 
+    @Override
+    public void insertToTable() {
+
+    }
+
+    @Override
+    public void updateTable() {
+
+    }
+
+    @Override
+    public void deleteRowInTable() {
+
+    }
+
+    @Override
+    public void displayTable() {
+
+    }
 }
