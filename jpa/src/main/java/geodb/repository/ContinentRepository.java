@@ -15,10 +15,17 @@ public class ContinentRepository implements Crudable {
 
     @Override
     public void insertToTable() {
+        System.out.println("Enter the name of the continent:");
+        String continentName = sc.nextLine();
+
+        System.out.println("Enter the area of the continent:");
+        double continentArea = sc.nextDouble();
+        sc.nextLine();
+
         JPAUtil.inTransaction(entityManager -> {
             Continent continent = new Continent();
-            continent.setContinentName("Asia");
-            continent.setContinentArea(44579000.0);
+            continent.setContinentName(continentName);
+            continent.setContinentArea(continentArea);
 
             entityManager.persist(continent);
             System.out.println("Continent inserted: " + continent);
