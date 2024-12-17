@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "currency", schema = "geodb")
-public class Currency implements Crudable {
+public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currencyID", nullable = false)
@@ -32,23 +32,4 @@ public class Currency implements Crudable {
         this.currencyName = currencyName;
     }
 
-    @Override
-    public void insertToTable() {
-
-    }
-
-    @Override
-    public void updateTable() {
-
-    }
-
-    @Override
-    public void deleteRowInTable() {
-
-    }
-
-    @Override
-    public void displayTable() {
-
-    }
 }
