@@ -2,7 +2,7 @@
 <persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-    <perasistence-unit name="jpa-hibernate-mysql">
+    <persistence-unit name="jpa-hibernate-mysql">
 
         <class>geodb.entity.City</class>
         <class>geodb.entity.Currency</class>
@@ -22,6 +22,6 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.highlight_sql" value="true"/>
         </properties>
-    </perasistence-unit>
+    </persistence-unit>
 
 </persistence>

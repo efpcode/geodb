@@ -1,6 +1,5 @@
 package geodb.entity;
 
-import geodb.Crudable;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
