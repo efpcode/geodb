@@ -35,18 +35,29 @@ public class ContinentRepository implements Crudable {
 
     @Override
     public void updateTable() {
-        JPAUtil.inTransaction(entityManager -> {
-            Continent continent = entityManager.createQuery(
-                            "SELECT c FROM Continent c WHERE c.continentName = :name", Continent.class)
-                    .setParameter("name", "Asia")
-                    .getSingleResult();
+        System.out.println("Enter the name of the continent you want to update:");
+        String continentName = sc.nextLine();
 
-            if (continent != null) {
-                continent.setContinentArea(45000000.0);
-                entityManager.merge(continent);
-                System.out.println("Continent updated: " + continent);
-            } else {
-                System.out.println("Continent not found to update.");
+        JPAUtil.inTransaction(entityManager -> {
+            try {
+                Continent continent = entityManager.createQuery(
+                                "SELECT c FROM Continent c WHERE c.continentName = :name", Continent.class)
+                        .setParameter("name", continentName)
+                        .getSingleResult();
+
+                if (continent != null) {
+                    System.out.println("Enter the new area for the continent:");
+                    double newArea = sc.nextDouble();
+                    sc.nextLine();
+
+                    continent.setContinentArea(newArea);
+                    entityManager.merge(continent);
+                    System.out.println("Continent updated: " + continent);
+                }
+            } catch (NoResultException e) {
+                System.out.println("Continent not found: " + continentName);
+            } catch (Exception e) {
+                System.out.println("An error occurred while updating the continent: " + e.getMessage());
             }
         });
     }
