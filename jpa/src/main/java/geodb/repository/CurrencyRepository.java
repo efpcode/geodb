@@ -12,29 +12,63 @@ import java.util.regex.Pattern;
 import static geodb.JPAUtil.inTransaction;
 
 public class CurrencyRepository implements Crudable {
-    Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     @Override
     public void insertToTable() {
+        displayTable();
+        Currency currency = new Currency();
+        System.out.println("Enter the name of the currency you want to add: ");
+        String newCurrencyName = scanner.nextLine();
+        var isOnlyAlpha = isAlpha(newCurrencyName);
+        if (!newCurrencyName.isEmpty() || isOnlyAlpha) {
+            currency.setCurrencyName(newCurrencyName);
+            try {
+                inTransaction(entityManager -> entityManager.persist(currency));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        displayTable();
+        continuePrompt();
 
+    }
+
+
+    /**
+     * isAlpha
+     * <p>The method checks with regex pattern matching if 'currencyName' contains characters from a to z or A to Z
+     * and regular space.
+     * </p>
+     *
+     * @param currencyName String passed for checking.
+     * @return 'true' if regex pattern is matched, otherwise 'false'.
+     */
+    private boolean isAlpha(String currencyName) {
+        Pattern isAlpha = Pattern.compile("[a-zA-Z ]+");
+        return isAlpha.matcher(currencyName).matches();
+
+    }
+
+    private void continuePrompt() {
+        System.out.println("Press enter to continue");
+        scanner.nextLine();
     }
 
     @Override
     public void updateTable() {
-        Pattern isAlpha = Pattern.compile("[a-zA-Z ]+");
         displayTable();
-
         System.out.println("Enter the ID of the currency you want to update: ");
-        Integer id = Integer.parseInt(scanner.nextLine());
+        int id = Integer.parseInt(scanner.nextLine());
         if (id <= 0) {
             throw new InputMismatchException("ID must be a positive number greater than 0");
         }
 
-
         System.out.println("Enter the currency name to be updated: ");
         String currencyName = scanner.nextLine();
-        if ((currencyName == null) || currencyName.isBlank() || !isAlpha.matcher(currencyName).matches()) {
-            throw  new InputMismatchException("The currency must not be blank and only alpha characters are allowed");
+        boolean isOnlyAlpha = isAlpha(currencyName);
+        if ((currencyName == null) || currencyName.isBlank() || !isOnlyAlpha) {
+            throw new InputMismatchException("The currency must not be blank and only alpha characters are allowed");
         }
 
         inTransaction(entityManager -> {
@@ -44,13 +78,26 @@ public class CurrencyRepository implements Crudable {
             }
         });
         displayTable();
-        System.out.println("Press enter to continue");
-        scanner.nextLine();
+        continuePrompt();
 
     }
 
     @Override
     public void deleteRowInTable() {
+        displayTable();
+        System.out.println("Enter the ID of the currency you want to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        if (id <= 0) {
+            throw new InputMismatchException("ID must be a positive number greater than 0");
+        }
+        inTransaction(entityManager -> {
+            Currency currency = entityManager.find(Currency.class, id);
+            if (currency != null) {
+                entityManager.remove(currency);
+            }
+        });
+        displayTable();
+        continuePrompt();
 
     }
 
@@ -64,11 +111,5 @@ public class CurrencyRepository implements Crudable {
             rows.stream().map(n -> n.getId() + ".  |  " + n.getCurrencyName()).forEach(System.out::println);
         });
     }
-
-    public static void main(String[] args) {
-        CurrencyRepository repository = new CurrencyRepository();
-        repository.updateTable();
-    }
-
 
 }
