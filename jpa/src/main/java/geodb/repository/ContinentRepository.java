@@ -28,6 +28,11 @@ public class ContinentRepository implements Crudable {
         double continentArea = sc.nextDouble();
         sc.nextLine();
 
+        if (continentArea <= 0) {
+            System.out.println("Continent area cannot be less than 0.");
+            return;
+        }
+
         JPAUtil.inTransaction(entityManager -> {
             Continent continent = new Continent();
             continent.setContinentName(continentName);
