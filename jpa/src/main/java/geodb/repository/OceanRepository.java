@@ -59,8 +59,17 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void deleteRowInTable() {
-        inTransaction(entityManager -> {
+        System.out.println("Enter the name of the Ocean you want to delete");
+        String deleteRowInTableOcean = scanner.next();
 
+        if(deleteRowInTableOcean.isEmpty()) {
+            System.out.println("Empty/Invalid input");
+            return;
+        }
+
+        String query = "DELETE FROM Ocean WHERE oceanName = '"+deleteRowInTableOcean+"' ";
+        inTransaction(entityManager -> {
+            var o = entityManager.createQuery(query).executeUpdate();
         });
     }
 }
