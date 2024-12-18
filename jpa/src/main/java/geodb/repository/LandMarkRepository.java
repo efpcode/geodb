@@ -15,6 +15,11 @@ public class LandMarkRepository implements Crudable {
         System.out.println("Enter the name of the landmark:");
         String landmarkName = sc.nextLine();
 
+        if (landmarkName.trim().isEmpty()) {
+            System.out.println("Landmark name cannot be empty.");
+            return;
+        }
+
         JPAUtil.inTransaction(entityManager -> {
             Landmark landmark = new Landmark();
             landmark.setLandMarkName(landmarkName);
@@ -26,6 +31,8 @@ public class LandMarkRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        System.out.println("Enter the name of the landmark you want to update:");
+        String landmarkName = sc.nextLine();
 
     }
 
