@@ -12,7 +12,8 @@ public class Main {
 
         OceanRepository ocean1 = new OceanRepository();
 
-        ocean1.insertToTable();
+
+        ocean1.updateTable();
         ocean1.displayTable();
 
     }

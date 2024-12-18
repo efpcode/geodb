@@ -29,7 +29,19 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        System.out.println("Enter the ID of the ocean you want to update");
+        int updateTableStringOceanID = scanner.nextInt();
+        String updateTableStringOcean = scanner.nextLine();
+
+        if(updateTableStringOcean.isEmpty()) {
+            System.out.println("Empty input");
+            return;
+        }
+
+        String query = "UPDATE Ocean SET oceanName = '"+updateTableStringOcean+"' WHERE oceanName = '"+updateTableStringOceanID+"' ";
+
         inTransaction(entityManager -> {
+            var o = entityManager.createQuery(query).executeUpdate();
         });
     }
 
