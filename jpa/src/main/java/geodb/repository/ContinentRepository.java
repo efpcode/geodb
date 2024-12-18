@@ -46,12 +46,12 @@ public class ContinentRepository implements Crudable {
     @Override
     public void updateTable() {
         System.out.println("Enter the ID of the continent you want to update:");
-        long continentId = sc.nextLong();
+        int continentID = sc.nextInt();
         sc.nextLine();
 
         JPAUtil.inTransaction(entityManager -> {
             try {
-                Continent continent = entityManager.find(Continent.class, continentId);
+                Continent continent = entityManager.find(Continent.class, continentID);
 
                 if (continent != null) {
                     System.out.println("Enter a new name for the continent (blank to keep current name):");
@@ -69,7 +69,7 @@ public class ContinentRepository implements Crudable {
                     entityManager.merge(continent);
                     System.out.println("Continent updated: " + continent);
                 } else {
-                    System.out.println("Continent with that ID not found: " + continentId);
+                    System.out.println("Continent with that ID not found: " + continentID);
                 }
             } catch (Exception e) {
                 System.out.println("An error occurred while updating the continent: " + e.getMessage());
