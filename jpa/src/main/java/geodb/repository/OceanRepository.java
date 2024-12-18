@@ -33,8 +33,8 @@ public class OceanRepository implements Crudable {
         int updateTableStringOceanID = scanner.nextInt();
         String updateTableStringOcean = scanner.nextLine();
 
-        if(updateTableStringOcean.isEmpty()) {
-            System.out.println("Empty input");
+        if(updateTableStringOcean.isEmpty() || updateTableStringOceanID <= 0) {
+            System.out.println("Empty/Invalid input");
             return;
         }
 
