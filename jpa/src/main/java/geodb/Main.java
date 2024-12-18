@@ -1,20 +1,14 @@
 package geodb;
 
-import geodb.repository.OceanRepository;
-
-import java.util.Scanner;
+import jakarta.persistence.EntityManager;
+import static geodb.JPAUtil.getEntityManager;
+import static geodb.JPAUtil.inTransaction;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        OceanRepository ocean1 = new OceanRepository();
-
-
-        ocean1.deleteRowInTable();
-        ocean1.displayTable();
-
+        System.out.println("Hello World");
     }
+
+
 }
