@@ -1,14 +1,15 @@
 package geodb;
 
-import jakarta.persistence.EntityManager;
-import static geodb.JPAUtil.getEntityManager;
-import static geodb.JPAUtil.inTransaction;
+import geodb.repository.OceanRepository;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
+
+        OceanRepository ocean1 = new OceanRepository();
+
+        ocean1.displayTable();
+
+
     }
-
-
 }
