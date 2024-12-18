@@ -24,7 +24,7 @@ public class CurrencyRepository implements Crudable {
         if (!newCurrencyName.isEmpty() || isOnlyAlpha) {
             currency.setCurrencyName(newCurrencyName);
             try {
-                inTransaction(entityManager -> entityManager.persist(currency));
+                inputInsertToTable(currency);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -32,6 +32,10 @@ public class CurrencyRepository implements Crudable {
         displayTable();
         continuePrompt();
 
+    }
+
+    private static void inputInsertToTable(Currency currency) {
+        inTransaction(entityManager -> entityManager.persist(currency));
     }
 
 
@@ -71,15 +75,19 @@ public class CurrencyRepository implements Crudable {
             throw new InputMismatchException("The currency must not be blank and only alpha characters are allowed");
         }
 
+        inputUpdateTable(id, currencyName);
+        displayTable();
+        continuePrompt();
+
+    }
+
+    private static void inputUpdateTable(int id, String currencyName) {
         inTransaction(entityManager -> {
             Currency currency = entityManager.find(Currency.class, id);
             if (currency != null) {
                 currency.setCurrencyName(currencyName);
             }
         });
-        displayTable();
-        continuePrompt();
-
     }
 
     @Override
@@ -90,15 +98,19 @@ public class CurrencyRepository implements Crudable {
         if (id <= 0) {
             throw new InputMismatchException("ID must be a positive number greater than 0");
         }
+        inputDeletionOfRow(id);
+        displayTable();
+        continuePrompt();
+
+    }
+
+    private static void inputDeletionOfRow(int id) {
         inTransaction(entityManager -> {
             Currency currency = entityManager.find(Currency.class, id);
             if (currency != null) {
                 entityManager.remove(currency);
             }
         });
-        displayTable();
-        continuePrompt();
-
     }
 
     @Override
