@@ -43,8 +43,8 @@ public class ContinentRepository implements Crudable {
         System.out.println("Enter the name of the continent you want to update:");
         String continentName = sc.nextLine();
 
-        if (continentName.trim().isEmpty()) {
-            System.out.println("Continent name cannot be empty.");
+        if (continentName == null || continentName.trim().isEmpty()) {
+            System.out.println("Continent name cannot be blank. Please try again.");
             return;
         }
 
@@ -56,11 +56,18 @@ public class ContinentRepository implements Crudable {
                         .getSingleResult();
 
                 if (continent != null) {
+                    System.out.println("Enter the new name for the continent (blank to keep current name):");
+                    String newName = sc.nextLine();
+
                     System.out.println("Enter the new area for the continent:");
                     double newArea = sc.nextDouble();
                     sc.nextLine();
 
+                    if (newName != null && !newName.trim().isEmpty()) {
+                        continent.setContinentName(newName.trim());
+                    }
                     continent.setContinentArea(newArea);
+
                     entityManager.merge(continent);
                     System.out.println("Continent updated: " + continent);
                 }
@@ -70,6 +77,7 @@ public class ContinentRepository implements Crudable {
                 System.out.println("An error occurred while updating the continent: " + e.getMessage());
             }
         });
+
     }
 
     @Override
