@@ -19,6 +19,11 @@ public class ContinentRepository implements Crudable {
         System.out.println("Enter the name of the continent:");
         String continentName = sc.nextLine();
 
+        if (continentName.trim().isEmpty()) {
+            System.out.println("Continent name cannot be empty.");
+            return;
+        }
+
         System.out.println("Enter the area of the continent:");
         double continentArea = sc.nextDouble();
         sc.nextLine();
@@ -37,6 +42,11 @@ public class ContinentRepository implements Crudable {
     public void updateTable() {
         System.out.println("Enter the name of the continent you want to update:");
         String continentName = sc.nextLine();
+
+        if (continentName.trim().isEmpty()) {
+            System.out.println("Continent name cannot be empty.");
+            return;
+        }
 
         JPAUtil.inTransaction(entityManager -> {
             try {
@@ -67,6 +77,11 @@ public class ContinentRepository implements Crudable {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the name of the continent you want to delete:");
         String continentName = sc.nextLine();
+
+        if (continentName.trim().isEmpty()) {
+            System.out.println("Continent name cannot be empty.");
+            return;
+        }
 
         JPAUtil.inTransaction(entityManager -> {
             try {
