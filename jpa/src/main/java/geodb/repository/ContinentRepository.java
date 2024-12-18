@@ -40,70 +40,54 @@ public class ContinentRepository implements Crudable {
 
     @Override
     public void updateTable() {
-        System.out.println("Enter the name of the continent you want to update:");
-        String continentName = sc.nextLine();
-
-        if (continentName == null || continentName.trim().isEmpty()) {
-            System.out.println("Continent name cannot be blank. Please try again.");
-            return;
-        }
+        System.out.println("Enter the ID of the continent you want to update:");
+        long continentId = sc.nextLong();
+        sc.nextLine();
 
         JPAUtil.inTransaction(entityManager -> {
             try {
-                Continent continent = entityManager.createQuery(
-                                "SELECT c FROM Continent c WHERE c.continentName = :name", Continent.class)
-                        .setParameter("name", continentName)
-                        .getSingleResult();
+                Continent continent = entityManager.find(Continent.class, continentId);
 
                 if (continent != null) {
-                    System.out.println("Enter the new name for the continent (blank to keep current name):");
-                    String newName = sc.nextLine();
+                    System.out.println("Enter a new name for the continent (blank to keep current name):");
+                    String newName = sc.nextLine().trim();
 
-                    System.out.println("Enter the new area for the continent:");
+                    System.out.println("Enter new area for the continent:");
                     double newArea = sc.nextDouble();
                     sc.nextLine();
 
-                    if (newName != null && !newName.trim().isEmpty()) {
-                        continent.setContinentName(newName.trim());
+                    if (!newName.isEmpty()) {
+                        continent.setContinentName(newName);
                     }
                     continent.setContinentArea(newArea);
 
                     entityManager.merge(continent);
                     System.out.println("Continent updated: " + continent);
+                } else {
+                    System.out.println("Continent with that ID not found: " + continentId);
                 }
-            } catch (NoResultException e) {
-                System.out.println("Continent not found: " + continentName);
             } catch (Exception e) {
                 System.out.println("An error occurred while updating the continent: " + e.getMessage());
             }
         });
-
     }
 
     @Override
     public void deleteRowInTable() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name of the continent you want to delete:");
-        String continentName = sc.nextLine();
-
-        if (continentName.trim().isEmpty()) {
-            System.out.println("Continent name cannot be empty.");
-            return;
-        }
+        System.out.println("Enter the ID of the continent you want to delete:");
+        long continentId = sc.nextLong();
+        sc.nextLine();
 
         JPAUtil.inTransaction(entityManager -> {
             try {
-                Continent continent = entityManager.createQuery(
-                                "SELECT c FROM Continent c WHERE c.continentName = :name", Continent.class)
-                        .setParameter("name", continentName)
-                        .getSingleResult();
+                Continent continent = entityManager.find(Continent.class, continentId);
 
                 if (continent != null) {
                     entityManager.remove(continent);
                     System.out.println("Continent deleted: " + continent);
+                } else {
+                    System.out.println("Continent with that ID not found: " + continentId);
                 }
-            } catch (NoResultException e) {
-                System.out.println("Continent not found: " + continentName);
             } catch (Exception e) {
                 System.out.println("An error occurred while deleting the continent: " + e.getMessage());
             }
