@@ -14,15 +14,22 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void insertToTable() {
-        inTransaction(entityManager -> {
+        String insertToTableStringOcean = scanner.nextLine();
 
+        if(insertToTableStringOcean.isEmpty()) {
+            System.out.println("Empty input");
+            return;
+        }
+        inTransaction(entityManager -> {
+            Ocean newOcean = new Ocean();
+            newOcean.setOceanName(insertToTableStringOcean);
+            entityManager.persist(newOcean);
         });
     }
 
     @Override
     public void updateTable() {
         inTransaction(entityManager -> {
-
         });
     }
 
