@@ -2,9 +2,8 @@ package geodb.repository;
 
 import geodb.Crudable;
 import geodb.JPAUtil;
-import geodb.entity.Landmark;
+import geodb.entity.LandMark;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +23,7 @@ public class LandMarkRepository implements Crudable {
         }
 
         JPAUtil.inTransaction(entityManager -> {
-            Landmark landmark = new Landmark();
+            LandMark landmark = new LandMark();
             landmark.setLandMarkName(landmarkName);
 
             entityManager.persist(landmark);
@@ -45,7 +44,7 @@ public class LandMarkRepository implements Crudable {
 
         JPAUtil.inTransaction(entityManager -> {
             try {
-                Landmark landmark = entityManager.find(Landmark.class, landmarkId);
+                LandMark landmark = entityManager.find(LandMark.class, landmarkId);
 
                 if (landmark == null) {
                     System.out.println("Landmark with that ID not found: " + landmarkId);
@@ -81,7 +80,7 @@ public class LandMarkRepository implements Crudable {
 
         JPAUtil.inTransaction(entityManager -> {
             try {
-                Landmark landmark = entityManager.find(Landmark.class, landmarkId);
+                LandMark landmark = entityManager.find(LandMark.class, landmarkId);
 
                 if (landmark == null) {
                     System.out.println("Landmark with that ID not found: " + landmarkId);
@@ -101,8 +100,8 @@ public class LandMarkRepository implements Crudable {
     public void displayTable() {
         EntityManager entityManager = JPAUtil.getEntityManager();
         try {
-            List<Landmark> landmarks = entityManager.createQuery(
-                            "SELECT l FROM Landmark l", Landmark.class)
+            List<LandMark> landmarks = entityManager.createQuery(
+                            "SELECT l FROM LandMark l", LandMark.class)
                     .getResultList();
 
             System.out.println("Landmark Table:");
