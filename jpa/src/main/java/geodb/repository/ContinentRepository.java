@@ -135,5 +135,4 @@ public class ContinentRepository implements Crudable {
         }
     }
 
-
 }
