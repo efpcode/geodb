@@ -68,7 +68,7 @@ public class City {
         this.cityArea = cityArea;
     }
 
-    public Boolean isCityCapital() {
+    public Boolean getCityCapital() {
         return cityCapital;
     }
 
