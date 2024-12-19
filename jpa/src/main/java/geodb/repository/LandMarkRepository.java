@@ -2,12 +2,14 @@ package geodb.repository;
 
 import geodb.Crudable;
 import geodb.JPAUtil;
+import geodb.entity.Country;
 import geodb.entity.LandMark;
 import jakarta.persistence.EntityManager;
 
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class LandMarkRepository implements Crudable {
 
@@ -22,13 +24,29 @@ public class LandMarkRepository implements Crudable {
             System.out.println("Landmark name cannot be empty.");
             return;
         }
+        if (!Pattern.compile("[a-zA-Z\\s]*").matcher(landmarkName).matches()) {
+            System.out.println("Only alphabetic characters are allowed");
+            return;
+        }
+
+        System.out.println("Enter the ID of the country:");
+        long countryId = sc.nextLong();
+        sc.nextLine();
 
         JPAUtil.inTransaction(entityManager -> {
+            Country country = entityManager.find(Country.class, countryId);
+
+            if (country == null) {
+                System.out.println("Country with ID " + countryId + " not found.");
+                return;
+            }
+
             LandMark landmark = new LandMark();
             landmark.setLandMarkName(landmarkName);
+            landmark.setLandMarkCountry(country);
 
             entityManager.persist(landmark);
-            System.out.println("Landmark inserted: " + landmarkName);
+            System.out.println("Landmark inserted: " + landmark.getLandMarkName() + "in country " + country.getCountryName());
         });
     }
 
@@ -54,6 +72,11 @@ public class LandMarkRepository implements Crudable {
 
                 System.out.println("Enter a new name for the landmark (Leave blank to keep the current name):");
                 String newLandmarkName = sc.nextLine().trim();
+
+                if (!Pattern.compile("[a-zA-Z\\s]*").matcher(newLandmarkName).matches()) {
+                    System.out.println("Only alphabetic characters are allowed");
+                    return;
+                }
 
                 if (!newLandmarkName.isEmpty()) {
                     landmark.setLandMarkName(newLandmarkName);
@@ -102,15 +125,19 @@ public class LandMarkRepository implements Crudable {
         EntityManager entityManager = JPAUtil.getEntityManager();
         try {
             List<LandMark> landmarks = entityManager.createQuery(
-                            "SELECT l FROM LandMark l", LandMark.class)
+                            "SELECT l FROM LandMark l JOIN FETCH l.landMarkCountry", LandMark.class)
                     .getResultList();
 
             System.out.println("Landmark Table:");
-            landmarks.forEach(System.out::println);
+            landmarks.forEach(landmark -> {
+                System.out.println("Landmark: " + landmark.getLandMarkName() +
+                        " Country: " + landmark.getLandMarkCountry().getCountryName());
+            });
 
         } finally {
             entityManager.close();
         }
     }
+
 
 }
