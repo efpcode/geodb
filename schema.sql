@@ -74,23 +74,36 @@ VALUES
 
 INSERT INTO currency(currencyName)
 VALUES
+    ('Egyptian Pound'),
+    ('Indian Rupee'),
     ('Euro'),
     ('Dollar');
 
 INSERT INTO continent (continentName, continentArea)
 VALUES
+    ('Africa', 30370000.0),
+    ('Asia', 44579000.0),
     ('Europe', 10186000.0),
     ('South America', 17840000.0);
 
 INSERT INTO landmark (landMarkName)
 VALUES
-    ('Eiffel Tower'),
-    ('Sphinx');
+    ('Sphinx'),
+    ('Valley of the Kings'),
+    ('Taj Mahal'),
+    ('India Gate');
 
 INSERT INTO ocean (oceanName)
 VALUES
-    ('Arctic Ocean'),
+    ('Indian Ocean'),
     ('Atlantic Ocean'),
+    ('Southern Ocean'),
+    ('Arctic Ocean'),
     ('Pacific Ocean');
 
-DROP TABLE IF EXISTS city;
+INSERT INTO country(countryCode, countryName, countryArea, countryNeighbor, countryPopulationSize, countryCity, countryContinent, countryCurrency, countryLandMark, countryOcean)
+VALUES
+    ('EG', 'Egypt', 1002450.0, 'Libia, Sudan, Israel',112700000,1, 1,1, 1,1),
+    ('EG', 'Egypt', 1002450.0, 'Libia, Sudan, Israel',112700000,1, 1,1, 2,2),
+    ('IN', 'India', 3287263.0, 'Afghanistan,  Bangladesh, Bhutan, China, Maldives, Myanmar, Nepal, Pakistan, Sri Lanka',1429000000.0,2, 2,2, 3,1),
+    ('IN', 'India', 3287263.0, 'Afghanistan,  Bangladesh, Bhutan, China, Maldives, Myanmar, Nepal, Pakistan, Sri Lanka',1429000000.0,2, 2,2, 4,1);
