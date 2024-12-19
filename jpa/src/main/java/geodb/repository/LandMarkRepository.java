@@ -2,7 +2,6 @@ package geodb.repository;
 
 import geodb.Crudable;
 import geodb.JPAUtil;
-import geodb.entity.LandMark;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -113,4 +112,3 @@ public class LandMarkRepository implements Crudable {
     }
 
 }
-

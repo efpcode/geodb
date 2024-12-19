@@ -2,6 +2,9 @@ package geodb.entity;
 
 import jakarta.persistence.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "continent", schema = "geodb")
 public class Continent {
@@ -15,6 +18,9 @@ public class Continent {
 
     @Column(name = "continentArea", nullable = false)
     private Double continentArea;
+
+    @OneToMany(mappedBy = "countryContinent")
+    private Set<geodb.entity.Country> countries = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -40,12 +46,12 @@ public class Continent {
         this.continentArea = continentArea;
     }
 
-    @Override
-    public String toString() {
-        return "Continent{" +
-                "id=" + id +
-                ", continentName='" + continentName + '\'' +
-                ", continentArea=" + continentArea +
-                '}';
+    public Set<geodb.entity.Country> getCountries() {
+        return countries;
     }
+
+    public void setCountries(Set<geodb.entity.Country> countries) {
+        this.countries = countries;
+    }
+
 }

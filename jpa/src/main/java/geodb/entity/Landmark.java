@@ -4,11 +4,15 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "landmark", schema = "geodb")
-public class LandMark {
+public class Landmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "landMarkID", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "landMarkCountry", nullable = false)
+    private Country landMarkCountry;
 
     @Column(name = "landMarkName", nullable = false)
     private String landMarkName;
@@ -21,6 +25,14 @@ public class LandMark {
         this.id = id;
     }
 
+    public Country getLandMarkCountry() {
+        return landMarkCountry;
+    }
+
+    public void setLandMarkCountry(Country landMarkCountry) {
+        this.landMarkCountry = landMarkCountry;
+    }
+
     public String getLandMarkName() {
         return landMarkName;
     }
@@ -29,11 +41,4 @@ public class LandMark {
         this.landMarkName = landMarkName;
     }
 
-    @Override
-    public String toString() {
-        return "Landmark{" +
-                "id=" + id +
-                ", landMarkName='" + landMarkName + '\'' +
-                '}';
-    }
 }

@@ -2,8 +2,6 @@ package geodb.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name = "currency", schema = "geodb")
 public class Currency {
@@ -11,6 +9,10 @@ public class Currency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currencyID", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "currencyCountry", nullable = false)
+    private Country currencyCountry;
 
     @Column(name = "currencyName", nullable = false)
     private String currencyName;
@@ -23,6 +25,14 @@ public class Currency {
         this.id = id;
     }
 
+    public Country getCurrencyCountry() {
+        return currencyCountry;
+    }
+
+    public void setCurrencyCountry(Country currencyCountry) {
+        this.currencyCountry = currencyCountry;
+    }
+
     public String getCurrencyName() {
         return currencyName;
     }
@@ -31,11 +41,4 @@ public class Currency {
         this.currencyName = currencyName;
     }
 
-    @Override
-    public String toString() {
-        return "Currency{" +
-                "id=" + id +
-                ", currencyName='" + currencyName + '\'' +
-                '}';
-    }
 }
