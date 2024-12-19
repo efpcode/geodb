@@ -10,6 +10,10 @@ public class Ocean {
     @Column(name = "oceanID", nullable = false)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "oceanCountry", nullable = false)
+    private Country oceanCountry;
+
     @Column(name = "oceanName", nullable = false)
     private String oceanName;
 
@@ -19,6 +23,14 @@ public class Ocean {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Country getOceanCountry() {
+        return oceanCountry;
+    }
+
+    public void setOceanCountry(Country oceanCountry) {
+        this.oceanCountry = oceanCountry;
     }
 
     public String getOceanName() {

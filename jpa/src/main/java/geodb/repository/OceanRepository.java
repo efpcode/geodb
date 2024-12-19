@@ -2,7 +2,6 @@ package geodb.repository;
 
 import geodb.Crudable;
 import geodb.JPAUtil;
-import geodb.entity.Ocean;
 import jakarta.persistence.EntityManager;
 
 import java.util.Scanner;
