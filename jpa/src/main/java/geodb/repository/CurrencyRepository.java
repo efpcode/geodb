@@ -116,11 +116,14 @@ public class CurrencyRepository implements Crudable {
     @Override
     public void displayTable() {
         System.out.println("Currency Table\n\n");
-        System.out.println("Currency ID  |  Currency Name");
+        System.out.println("Currency ID  |  Currency Name  | FK CurrencyCountry  |  Currency Country |");
         inTransaction(entityManager -> {
-            TypedQuery<Currency> query = entityManager.createQuery("SELECT c FROM Currency c", Currency.class);
+            var eg = entityManager.getEntityGraph("Country.currency");
+
+            TypedQuery<Currency> query = entityManager.createQuery("SELECT c FROM Currency c", Currency.class)
+                    .setHint("javax.persistence.fetchgraph", eg);
             List<Currency> rows = query.getResultList();
-            rows.stream().map(n -> n.getId() + ".  |  " + n.getCurrencyName()).forEach(System.out::println);
+            rows.stream().map(n -> n.getId() + ".  |  " + n.getCurrencyName() + " | " + n.getCurrencyCountry().getId() + " | " + n.getCurrencyCountry().getCountryName()).forEach(System.out::println);
         });
     }
 
