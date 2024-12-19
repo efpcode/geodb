@@ -1,6 +1,7 @@
 package geodb.repository;
 
 import geodb.Crudable;
+import geodb.entity.City;
 import jakarta.persistence.TypedQuery;
 
 import java.util.InputMismatchException;

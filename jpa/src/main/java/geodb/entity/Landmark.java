@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "landmark", schema = "geodb")
-public class Landmark {
+public class LandMark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "landMarkID", nullable = false)

@@ -1,6 +1,7 @@
 package geodb.repository;
 
 import geodb.Crudable;
+import geodb.entity.Currency;
 import jakarta.persistence.TypedQuery;
 
 import java.util.InputMismatchException;
@@ -122,5 +123,6 @@ public class CurrencyRepository implements Crudable {
             rows.stream().map(n -> n.getId() + ".  |  " + n.getCurrencyName()).forEach(System.out::println);
         });
     }
+
 
 }
