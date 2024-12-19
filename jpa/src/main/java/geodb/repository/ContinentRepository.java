@@ -2,10 +2,8 @@ package geodb.repository;
 
 import geodb.Crudable;
 import geodb.JPAUtil;
-import geodb.entity.Continent;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 
 import java.util.List;
 import java.util.Scanner;
