@@ -25,6 +25,8 @@ public class City {
     @Column(name = "cityCapital", nullable = false)
     private Boolean cityCapital = false;
 
+
+
     public City() {
         // Required by JPA
     }
