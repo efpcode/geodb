@@ -41,7 +41,7 @@ public class Country {
     private Set<geodb.entity.Currency> currencies = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "landMarkCountry")
-    private Set<geodb.entity.Landmark> landmarks = new LinkedHashSet<>();
+    private Set<LandMark> landmarks = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "oceanCountry")
     private Set<geodb.entity.Ocean> oceans = new LinkedHashSet<>();
@@ -118,11 +118,11 @@ public class Country {
         this.currencies = currencies;
     }
 
-    public Set<geodb.entity.Landmark> getLandmarks() {
+    public Set<LandMark> getLandmarks() {
         return landmarks;
     }
 
-    public void setLandmarks(Set<geodb.entity.Landmark> landmarks) {
+    public void setLandmarks(Set<LandMark> landmarks) {
         this.landmarks = landmarks;
     }
 
