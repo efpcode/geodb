@@ -112,10 +112,5 @@ public class LandMarkRepository implements Crudable {
         }
     }
 
-    public static void main(String[] args) {
-        LandMarkRepository repository = new LandMarkRepository();
-        repository.displayTable();
-
-    }
 }
 
