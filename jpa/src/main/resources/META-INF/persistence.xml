@@ -5,10 +5,10 @@
     <persistence-unit name="jpa-hibernate-mysql">
 
         <class>geodb.entity.City</class>
-        <class>geodb.entity.Ocean</class>
         <class>geodb.entity.Currency</class>
         <class>geodb.entity.LandMark</class>
         <class>geodb.entity.Continent</class>
+        <class>geodb.entity.Ocean</class>
 
         <properties>
             <!-- Database connection settings -->
