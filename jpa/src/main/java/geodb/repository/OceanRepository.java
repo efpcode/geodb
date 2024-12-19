@@ -4,7 +4,9 @@ import geodb.Crudable;
 import geodb.JPAUtil;
 import geodb.entity.Ocean;
 import jakarta.persistence.EntityManager;
+
 import java.util.Scanner;
+
 import static geodb.JPAUtil.inTransaction;
 
 
@@ -16,7 +18,7 @@ public class OceanRepository implements Crudable {
     public void insertToTable() {
         String insertToTableStringOcean = scanner.nextLine();
 
-        if(insertToTableStringOcean.isEmpty()) {
+        if (insertToTableStringOcean.isEmpty()) {
             System.out.println("Empty input");
             return;
         }
@@ -33,12 +35,12 @@ public class OceanRepository implements Crudable {
         int updateTableStringOceanID = scanner.nextInt();
         String updateTableStringOcean = scanner.nextLine();
 
-        if(updateTableStringOcean.isEmpty() || updateTableStringOceanID <= 0) {
+        if (updateTableStringOcean.isEmpty() || updateTableStringOceanID <= 0) {
             System.out.println("Empty/Invalid input");
             return;
         }
 
-        String query = "UPDATE Ocean SET oceanName = '"+updateTableStringOcean+"' WHERE oceanName = '"+updateTableStringOceanID+"' ";
+        String query = "UPDATE Ocean SET oceanName = '" + updateTableStringOcean + "' WHERE oceanName = '" + updateTableStringOceanID + "' ";
 
         inTransaction(entityManager -> {
             var o = entityManager.createQuery(query).executeUpdate();
@@ -49,10 +51,10 @@ public class OceanRepository implements Crudable {
     public void displayTable() {
         String queryDisplay = "SELECT o FROM Ocean o";
         inTransaction(entityManager -> {
-            var o =entityManager.createQuery(queryDisplay, Ocean.class)
+            var o = entityManager.createQuery(queryDisplay, Ocean.class)
                     .getResultList();
             o.forEach(ocean -> {
-                System.out.println("Name: "+ ocean.getOceanName());
+                System.out.println("Name: " + ocean.getOceanName());
             });
         });
     }
@@ -62,12 +64,12 @@ public class OceanRepository implements Crudable {
         System.out.println("Enter the name of the Ocean you want to delete");
         String deleteRowInTableOcean = scanner.next();
 
-        if(deleteRowInTableOcean.isEmpty()) {
+        if (deleteRowInTableOcean.isEmpty()) {
             System.out.println("Empty/Invalid input");
             return;
         }
 
-        String query = "DELETE FROM Ocean WHERE oceanName = '"+deleteRowInTableOcean+"' ";
+        String query = "DELETE FROM Ocean WHERE oceanName = '" + deleteRowInTableOcean + "' ";
         inTransaction(entityManager -> {
             var o = entityManager.createQuery(query).executeUpdate();
         });
