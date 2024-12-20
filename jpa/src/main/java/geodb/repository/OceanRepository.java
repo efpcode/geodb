@@ -29,7 +29,7 @@ public class OceanRepository implements Crudable {
 
 
 
-        if (insertToTableStringOcean.isEmpty()) {
+        if (insertToTableStringOcean.isEmpty() || insertToTableCountryID <= 0) {
             System.out.println("Empty/Wrong input");
             return;
         }
