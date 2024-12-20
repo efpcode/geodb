@@ -8,7 +8,6 @@ import geodb.entity.Continent;
 import geodb.entity.Country;
 import jakarta.persistence.EntityManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -76,7 +75,6 @@ public class CountryRepository implements Crudable {
         createCountryRelationShips(countryPK);
 
 
-
     }
 
     private void createCountryRelationShips(int countryPK) {
@@ -87,11 +85,13 @@ public class CountryRepository implements Crudable {
                 new OceanRepository()
         );
 
-        for(Crudable table: tables) {
+        for (Crudable table : tables) {
             System.out.println("Friendly reminder that all connection are to be done with: " + countryPK);
             table.insertToTable();
         }
 
+        displayTable();
+        continuePrompt();
 
 
     }
@@ -168,11 +168,25 @@ public class CountryRepository implements Crudable {
 
     @Override
     public void displayTable() {
-        inTransaction(entityManager -> {
+        System.out.println("\nCountry table\n");
+        System.out.println("Country ID | Country Code | Country Name | Country Area | Country Neighbor | Country Population | Country Continent ID | Country Continent Name |");
 
-            var countries = entityManager.createQuery("select c from Country c", Country.class).getResultList();
+        inTransaction(entityManager -> {
+            var eg = entityManager.getEntityGraph("Continent.country");
+
+            var countries = entityManager.createQuery("select c from Country c", Country.class)
+                    .setHint("jakarta.persistence.fetchgraph", eg).getResultList();
             countries.stream()
-                    .map(c -> c.getId() + "|" + c.getCountryName()).forEach(System.out::println);
+                    .map(c ->
+                            c.getId() + " | "
+                                    + c.getCountryCode() + " | "
+                                    + c.getCountryName() + " | "
+                                    + c.getCountryArea() + " | "
+                                    + c.getCountryNeighbor() + " | "
+                                    + c.getCountryPopulationSize() + " | "
+                                    + c.getCountryContinent().getId() + " | "
+                                    + c.getCountryContinent().getContinentName() + " | "
+                    ).forEach(System.out::println);
         });
 
     }
@@ -197,6 +211,6 @@ public class CountryRepository implements Crudable {
 
     public static void main(String[] args) {
         CountryRepository repo = new CountryRepository();
-        repo.insertToTable();
+        repo.displayTable();
     }
 }

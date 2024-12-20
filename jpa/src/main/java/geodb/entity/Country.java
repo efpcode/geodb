@@ -8,6 +8,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "country", schema = "geodb")
+@NamedEntityGraph(name = "Continent.country",
+        attributeNodes = @NamedAttributeNode("countryContinent"))
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
