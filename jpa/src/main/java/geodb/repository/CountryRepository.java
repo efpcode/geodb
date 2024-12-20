@@ -3,10 +3,14 @@ package geodb.repository;
 import static geodb.JPAUtil.inTransaction;
 
 import geodb.Crudable;
+import geodb.JPAUtil;
+import geodb.entity.Continent;
 import geodb.entity.Country;
+import jakarta.persistence.EntityManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -14,6 +18,8 @@ public class CountryRepository implements Crudable {
     static private Scanner scanner = new Scanner(System.in);
     @Override
     public void insertToTable() {
+        Country country = new Country();
+        ContinentRepository continentRepository = new ContinentRepository();
         System.out.println("Please enter the new country you want to insert to the country table");
         String countryName = scanner.nextLine();
         boolean isCountryName = isAlpha(countryName);
@@ -43,11 +49,32 @@ public class CountryRepository implements Crudable {
         if (population <= 0) {
             throw new IllegalArgumentException("Value must be a positive integer and greater than 0");
         }
+        System.out.println("Please enter the continent name of the country");
+        String continentName = scanner.nextLine();
+        if (continentName == null || continentName.isEmpty() || !isAlpha(continentName)) {
+            throw new IllegalArgumentException("Value must be a valid continent name and not empty");
+        }
        // Add Continent object helper method.
+       var hasContinent = findContinent(continentName);
+        if(hasContinent.isEmpty()){
+            System.out.println("Continent not found, please add the continent to the continent table");
+            continentRepository.insertToTable();
+            hasContinent = findContinent(continentName);
+
+        }
        // Add find newly added country method.
        // Add methods that calls for insertToTable for different entities object.
 
     }
+
+    private Optional<Continent> findContinent(String continentName) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        try{
+           return Optional.of( entityManager.find(Continent.class, continentName));
+    }catch (Exception e){
+        return Optional.empty();}
+    }
+
 
     @Override
     public void updateTable() {
