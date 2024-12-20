@@ -6,11 +6,14 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "city", schema = "geodb")
 public class City {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cityID", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cityCountry", nullable = false)
+    private geodb.entity.Country cityCountry;
 
     @Column(name = "cityName", nullable = false)
     private String cityName;
@@ -25,25 +28,20 @@ public class City {
     @Column(name = "cityCapital", nullable = false)
     private Boolean cityCapital = false;
 
-
-
-    public City() {
-        // Required by JPA
-    }
-
-    public City(String cityName, Long cityPopulationSize, Double cityArea, Boolean cityCapital) {
-        this.cityName = cityName;
-        this.cityPopulationSize = cityPopulationSize;
-        this.cityArea = cityArea;
-        this.cityCapital = cityCapital;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public geodb.entity.Country getCityCountry() {
+        return cityCountry;
+    }
+
+    public void setCityCountry(geodb.entity.Country cityCountry) {
+        this.cityCountry = cityCountry;
     }
 
     public String getCityName() {
@@ -77,4 +75,5 @@ public class City {
     public void setCityCapital(Boolean cityCapital) {
         this.cityCapital = cityCapital;
     }
+
 }
