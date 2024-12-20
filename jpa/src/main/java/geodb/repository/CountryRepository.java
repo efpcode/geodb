@@ -184,10 +184,10 @@ public class CountryRepository implements Crudable {
 
     /**
      * isAlpha
-     * <p> Method evalutes if currencyName parameter matches letters a to z or A to Z, space and comma </p>
+     * <p> Method evaluates if currencyName parameter matches letters a to z or A to Z, space and comma </p>
      *
      * @param currencyName String passed for evaluation.
-     * @return boolaen 'true' if regex patten is match, otherwise 'false'
+     * @return boolean 'true' if regex patten is match, otherwise 'false'
      */
     private boolean isAlpha(String currencyName) {
         Pattern isAlpha = Pattern.compile("[a-zA-Z /,]+");
