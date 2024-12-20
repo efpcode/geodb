@@ -41,4 +41,12 @@ public class LandMark {
         this.landMarkName = landMarkName;
     }
 
+    @Override
+    public String toString() {
+        return "LandMark{" +
+                "id=" + id +
+                ", landMarkCountry=" + landMarkCountry +
+                ", landMarkName='" + landMarkName + '\'' +
+                '}';
+    }
 }
