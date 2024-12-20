@@ -138,7 +138,65 @@ public class CountryRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        displayTable();
+        System.out.println("Please select the Country ID to update corresponding row");
+        int countryID = Integer.parseInt(scanner.nextLine());
+        if (countryID <= 0) {
+            throw new IllegalArgumentException("Value must be a positive integer and greater than 0");
+        }
 
+        System.out.println("Please enter new country code");
+        String countryCode = scanner.nextLine();
+        if(countryCode == null || countryCode.isEmpty() || !isAlpha(countryCode)) {
+            throw new IllegalArgumentException("Value must be a valid country code and not empty");
+        }
+
+        System.out.println("Please enter new country name");
+        String countryName = scanner.nextLine();
+
+        if (countryName == null || countryName.isEmpty() || !isAlpha(countryName)) {
+            throw new IllegalArgumentException("Value must be a valid country name and not empty");
+        }
+
+        System.out.println("Please enter new country area");
+        double countryArea = Double.parseDouble(scanner.nextLine());
+
+        if (countryArea <= 0) {
+            throw new IllegalArgumentException("Value must be a positive integer and greater than 0");
+        }
+
+        System.out.println("Please update neighboring land countries separated with comma for multiple countries");
+        String neighboringCountry = scanner.nextLine();
+        if (neighboringCountry == null || neighboringCountry.isEmpty() || !isAlpha(neighboringCountry)) {
+            throw new IllegalArgumentException("Value must be a valid country code and not empty");
+        }
+
+        System.out.println("Please enter new population size");
+        long population = Long.parseLong(scanner.nextLine());
+
+        if (population <= 0) {
+            throw new IllegalArgumentException("Value must be a positive integer and greater than 0");
+        }
+
+        inputUpdateTable(countryID, countryName, countryCode, countryArea, neighboringCountry, population);
+
+        displayTable();
+        continuePrompt();
+    }
+
+    private void inputUpdateTable(int countryID, String countryCode, String countryName, double countryArea, String neighboringCountry, Long population) {
+
+        inTransaction(entityManager -> {
+            Country country = entityManager.find(Country.class, countryID);
+            if (country != null) {
+                country.setCountryName(countryName);
+                country.setCountryCode(countryCode);
+                country.setCountryArea(countryArea);
+                country.setCountryNeighbor(neighboringCountry);
+                country.setCountryPopulationSize(population);
+                entityManager.merge(country);
+            }
+        });
     }
 
     @Override
@@ -209,8 +267,4 @@ public class CountryRepository implements Crudable {
 
     }
 
-    public static void main(String[] args) {
-        CountryRepository repo = new CountryRepository();
-        repo.displayTable();
-    }
 }
