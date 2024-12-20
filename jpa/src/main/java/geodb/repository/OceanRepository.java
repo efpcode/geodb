@@ -48,6 +48,10 @@ public class OceanRepository implements Crudable {
     public void updateTable() {
         System.out.println("Enter the ID number of the ocean you want to update");
         int updateTableStringOceanID = scanner.nextInt();
+
+        // A scanner.nextLine that will be skipped on purpose. So that Row 55-56 will be called
+        scanner.nextLine();
+
         System.out.println("Enter the new name/change of the Ocean");
         String updateTableStringOcean = scanner.nextLine();
 
@@ -56,10 +60,9 @@ public class OceanRepository implements Crudable {
             return;
         }
 
-        String query = "UPDATE Ocean SET oceanName = '" + updateTableStringOcean + "' WHERE oceanName = '" + updateTableStringOceanID + "' ";
-
         inTransaction(entityManager -> {
-            var o = entityManager.createQuery(query).executeUpdate();
+            Ocean updateOcean = entityManager.find(Ocean.class, updateTableStringOceanID);
+            updateOcean.setOceanName(updateTableStringOcean);
         });
     }
 
