@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 
 import java.util.Scanner;
 
+import static geodb.JPAUtil.getEntityManager;
 import static geodb.JPAUtil.inTransaction;
 
 
@@ -78,17 +79,20 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void deleteRowInTable() {
-        System.out.println("Enter the name of the Ocean you want to delete");
-        String deleteRowInTableOcean = scanner.next();
+        System.out.println("Enter the OceanID of the Ocean you want to delete");
+        int deleteRowInTableOcean = scanner.nextInt();
 
-        if (deleteRowInTableOcean.isEmpty()) {
+        if (deleteRowInTableOcean <= 0) {
             System.out.println("Empty/Invalid input");
             return;
         }
 
-        String query = "DELETE FROM Ocean WHERE oceanName = '" + deleteRowInTableOcean + "' ";
+        String deletedRowName = String.valueOf(getEntityManager().find(Ocean.class, deleteRowInTableOcean).getOceanName());
+        System.out.println("Deleting: "+deletedRowName);
+
         inTransaction(entityManager -> {
-            var o = entityManager.createQuery(query).executeUpdate();
+            Ocean deleteOcean = entityManager.find(Ocean.class,deleteRowInTableOcean);
+            entityManager.remove(deleteOcean);
         });
     }
 }
