@@ -16,6 +16,7 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void insertToTable() {
+        System.out.println("Enter the name of the New Ocean you want to insert");
         String insertToTableStringOcean = scanner.nextLine();
 
         if (insertToTableStringOcean.isEmpty()) {
@@ -33,6 +34,7 @@ public class OceanRepository implements Crudable {
     public void updateTable() {
         System.out.println("Enter the ID of the ocean you want to update");
         int updateTableStringOceanID = scanner.nextInt();
+        System.out.println("Enter the new name/change of the Ocean");
         String updateTableStringOcean = scanner.nextLine();
 
         if (updateTableStringOcean.isEmpty() || updateTableStringOceanID <= 0) {
