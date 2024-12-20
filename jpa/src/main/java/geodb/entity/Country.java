@@ -34,16 +34,16 @@ public class Country {
     @JoinColumn(name = "countryContinent", nullable = false)
     private Continent countryContinent;
 
-    @OneToMany(mappedBy = "cityCountry")
+    @OneToMany(mappedBy = "cityCountry", cascade = CascadeType.REMOVE)
     private Set<City> cities = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "currencyCountry")
+    @OneToMany(mappedBy = "currencyCountry", cascade = CascadeType.REMOVE)
     private Set<geodb.entity.Currency> currencies = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "landMarkCountry")
+    @OneToMany(mappedBy = "landMarkCountry", cascade = CascadeType.REMOVE)
     private Set<LandMark> landmarks = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "oceanCountry")
+    @OneToMany(mappedBy = "oceanCountry", cascade = CascadeType.REMOVE)
     private Set<geodb.entity.Ocean> oceans = new LinkedHashSet<>();
 
     public Integer getId() {

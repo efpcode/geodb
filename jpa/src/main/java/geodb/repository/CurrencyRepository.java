@@ -139,4 +139,9 @@ public class CurrencyRepository implements Crudable {
         });
     }
 
+    public static void main(String[] args) {
+        CurrencyRepository repository = new CurrencyRepository();
+        repository.deleteRowInTable();
+    }
+
 }
