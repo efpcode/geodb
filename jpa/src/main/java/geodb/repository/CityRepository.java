@@ -1,16 +1,26 @@
 package geodb.repository;
 
 import geodb.Crudable;
+import geodb.JPAUtil;
+import geodb.entity.City;
+import geodb.entity.Country;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static geodb.JPAUtil.getEntityManager;
 import static geodb.JPAUtil.inTransaction;
 
 public class CityRepository implements Crudable {
     private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        CityRepository cityRepository = new CityRepository();
+        cityRepository.insertToTable();
+    }
 
     @Override
     public void insertToTable() {
@@ -42,15 +52,28 @@ public class CityRepository implements Crudable {
 
         boolean isCapital = capital.equals("Y");
 
+        System.out.println("Enter the id of the country: ");
+        int countryId = scanner.nextInt();
+        scanner.nextLine();
+
         city.setCityName(cityName);
         city.setCityPopulationSize(population);
         city.setCityArea(area);
         city.setCityCapital(isCapital);
-        inputInsertToTable(city);
+        inputInsertToTable(city, countryId);
+
     }
 
-    private static void inputInsertToTable(City city) {
-        inTransaction(entityManager -> entityManager.persist(city));
+    private static void inputInsertToTable(City city, int countryId) {
+        inTransaction
+                (entityManager -> {
+                    Country country = entityManager.find(Country.class, countryId);
+                    if (country == null) {
+                        throw new EntityNotFoundException("Country not found with ID: " + countryId);
+                    }
+                    city.setCityCountry(country);
+                    entityManager.persist(city);});
+
     }
 
     @Override
@@ -82,14 +105,13 @@ public class CityRepository implements Crudable {
         validateIsCapital(isCapitalInput);
         boolean isCapital = isCapitalInput.equals("Y");
 
-
         inputUpdateTable(cityId, cityName, population, area, isCapital);
     }
 
     @Override
     public void deleteRowInTable() {
 
-        System.out.println("Enter city id to delete: ");
+        System.out.println("Enter the id of the country you want to delete: ");
         int cityID = scanner.nextInt();
         scanner.nextLine();
 
@@ -108,12 +130,12 @@ public class CityRepository implements Crudable {
     @Override
     public void displayTable() {
         System.out.println("City Table\n\n");
-        System.out.println("City ID | City name | City population | City area | City capital");
+        System.out.println("City ID | Country name | City name | City population | City area | City capital");
         inTransaction(entityManager -> {
             TypedQuery<City> query = entityManager.createQuery("SELECT c FROM City c", City.class);
             List<City> rows = query.getResultList();
             rows.stream()
-                    .map(n -> n.getId() + ".  |  " + n.getCityName() + " | " + n.getCityPopulationSize() + " | " + n.getCityArea() + " | " + n.getCityCapital())
+                    .map(n -> n.getId() + ".  |  " + n.getCityCountry() + " | " + n.getCityName() + " | " + n.getCityPopulationSize() + " | " + n.getCityArea() + " | " + n.getCityCapital())
                     .forEach(System.out::println);
         });
     }
@@ -154,6 +176,7 @@ public class CityRepository implements Crudable {
                 newCity.setCityPopulationSize(newPopulation);
                 newCity.setCityArea(newArea);
                 newCity.setCityCapital(isCapital);
+                entityManager.merge(newCity);
             }
         });
     }

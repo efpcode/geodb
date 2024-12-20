@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "currency", schema = "geodb")
+@NamedEntityGraph(name = "Country.currency",
+        attributeNodes = @NamedAttributeNode("currencyCountry"))
 public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

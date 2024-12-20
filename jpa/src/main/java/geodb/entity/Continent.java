@@ -54,4 +54,13 @@ public class Continent {
         this.countries = countries;
     }
 
+    @Override
+    public String toString() {
+        return "Continent{" +
+                "id=" + id +
+                ", continentName='" + continentName + '\'' +
+                ", continentArea=" + continentArea +
+                ", countries=" + countries +
+                '}';
+    }
 }

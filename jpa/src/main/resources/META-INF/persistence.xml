@@ -9,6 +9,7 @@
         <class>geodb.entity.LandMark</class>
         <class>geodb.entity.Continent</class>
         <class>geodb.entity.Ocean</class>
+        <class>geodb.entity.Country</class>
 
         <properties>
             <!-- Database connection settings -->
