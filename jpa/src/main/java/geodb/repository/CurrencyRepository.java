@@ -1,6 +1,7 @@
 package geodb.repository;
 
 import geodb.Crudable;
+import geodb.entity.Country;
 import geodb.entity.Currency;
 import jakarta.persistence.TypedQuery;
 
@@ -21,10 +22,14 @@ public class CurrencyRepository implements Crudable {
         System.out.println("Enter the name of the currency you want to add: ");
         String newCurrencyName = scanner.nextLine();
         var isOnlyAlpha = isAlpha(newCurrencyName);
+
+        System.out.println("Enter the FK of the country you wish to add a currency: ");
+        int countryId = Integer.parseInt(scanner.nextLine());
+
         if (!newCurrencyName.isEmpty() || isOnlyAlpha) {
             currency.setCurrencyName(newCurrencyName);
             try {
-                inputInsertToTable(currency);
+                inputInsertToTable(currency, countryId);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -34,8 +39,14 @@ public class CurrencyRepository implements Crudable {
 
     }
 
-    private static void inputInsertToTable(Currency currency) {
-        inTransaction(entityManager -> entityManager.persist(currency));
+    private static void inputInsertToTable(Currency currency, int countryFKID) {
+        inTransaction(entityManager ->{
+            Country country = entityManager.find(Country.class, countryFKID);
+            if (country != null) {
+                currency.setCurrencyCountry(country);
+                entityManager.persist(currency);
+            }
+        });
     }
 
 
@@ -86,6 +97,7 @@ public class CurrencyRepository implements Crudable {
             Currency currency = entityManager.find(Currency.class, id);
             if (currency != null) {
                 currency.setCurrencyName(currencyName);
+                entityManager.merge(currency);
             }
         });
     }
@@ -116,11 +128,14 @@ public class CurrencyRepository implements Crudable {
     @Override
     public void displayTable() {
         System.out.println("Currency Table\n\n");
-        System.out.println("Currency ID  |  Currency Name");
+        System.out.println("Currency ID  |  Currency Name  | FK CurrencyCountry  |  Currency Country |");
         inTransaction(entityManager -> {
-            TypedQuery<Currency> query = entityManager.createQuery("SELECT c FROM Currency c", Currency.class);
+            var eg = entityManager.getEntityGraph("Country.currency");
+
+            TypedQuery<Currency> query = entityManager.createQuery("SELECT c FROM Currency c", Currency.class)
+                    .setHint("jakarta.persistence.fetchgraph", eg);
             List<Currency> rows = query.getResultList();
-            rows.stream().map(n -> n.getId() + ".  |  " + n.getCurrencyName()).forEach(System.out::println);
+            rows.stream().map(n -> n.getId() + ".  |  " + n.getCurrencyName() + " | " + n.getCurrencyCountry().getId() + " | " + n.getCurrencyCountry().getCountryName()).forEach(System.out::println);
         });
     }
 

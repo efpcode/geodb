@@ -2,13 +2,14 @@ package geodb.repository;
 
 import geodb.Crudable;
 import geodb.JPAUtil;
+
 import geodb.entity.Continent;
-
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class ContinentRepository implements Crudable {
 
@@ -24,7 +25,12 @@ public class ContinentRepository implements Crudable {
             return;
         }
 
-        System.out.println("Enter the area of the continent:");
+        if (!Pattern.compile("[a-zA-Z\\s]*").matcher(continentName).matches()) {
+            System.out.println("Only alphabetic characters are allowed");
+            return;
+        }
+
+        System.out.println("Enter the area of the continent in square kilometers:");
         double continentArea = sc.nextDouble();
         sc.nextLine();
 
@@ -57,7 +63,12 @@ public class ContinentRepository implements Crudable {
                     System.out.println("Enter a new name for the continent (blank to keep current name):");
                     String newName = sc.nextLine().trim();
 
-                    System.out.println("Enter new area for the continent:");
+                    if (!Pattern.compile("[a-zA-Z\\s]*").matcher(newName).matches()) {
+                        System.out.println("Only alphabetic characters are allowed");
+                        return;
+                    }
+
+                    System.out.println("Enter new area in square kilometers for the continent:");
                     double newArea = sc.nextDouble();
                     sc.nextLine();
 
@@ -106,8 +117,19 @@ public class ContinentRepository implements Crudable {
             List<Continent> continents = entityManager.createQuery(
                     "SELECT c FROM Continent c", Continent.class).getResultList();
 
-            System.out.println("Continent Table:");
-            continents.forEach(System.out::println);
+            if (continents.isEmpty()) {
+                System.out.println("No continents found in the database.");
+                return;
+            }
+
+            DecimalFormat formatter = new DecimalFormat("#,###.##");
+
+            System.out.println("=== List of Continents ===");
+            continents.forEach(continent -> {
+                System.out.println("Continent Name: " + continent.getContinentName());
+                System.out.println("Continent Area: " + formatter.format(continent.getContinentArea()) + " square kilometers");
+                System.out.println("--------------------------");
+            });
         } finally {
             entityManager.close();
         }

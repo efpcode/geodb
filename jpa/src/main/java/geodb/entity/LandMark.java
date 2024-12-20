@@ -10,6 +10,10 @@ public class LandMark {
     @Column(name = "landMarkID", nullable = false)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "landMarkCountry", nullable = false)
+    private Country landMarkCountry;
+
     @Column(name = "landMarkName", nullable = false)
     private String landMarkName;
 
@@ -19,6 +23,14 @@ public class LandMark {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Country getLandMarkCountry() {
+        return landMarkCountry;
+    }
+
+    public void setLandMarkCountry(Country landMarkCountry) {
+        this.landMarkCountry = landMarkCountry;
     }
 
     public String getLandMarkName() {
@@ -31,8 +43,9 @@ public class LandMark {
 
     @Override
     public String toString() {
-        return "Landmark{" +
+        return "LandMark{" +
                 "id=" + id +
+                ", landMarkCountry=" + landMarkCountry +
                 ", landMarkName='" + landMarkName + '\'' +
                 '}';
     }

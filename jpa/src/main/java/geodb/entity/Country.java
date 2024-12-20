@@ -3,10 +3,14 @@ package geodb.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "country", schema = "geodb")
 public class Country {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "countryID", nullable = false)
     private Integer id;
 
@@ -27,24 +31,20 @@ public class Country {
     private Long countryPopulationSize;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "countryCity", nullable = false)
-    private City countryCity;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "countryContinent", nullable = false)
     private Continent countryContinent;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "countryCurrency", nullable = false)
-    private Currency countryCurrency;
+    @OneToMany(mappedBy = "cityCountry")
+    private Set<City> cities = new LinkedHashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "countryLandMark", nullable = false)
-    private LandMark countryLandMark;
+    @OneToMany(mappedBy = "currencyCountry")
+    private Set<geodb.entity.Currency> currencies = new LinkedHashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "countryOcean", nullable = false)
-    private Ocean countryOcean;
+    @OneToMany(mappedBy = "landMarkCountry")
+    private Set<LandMark> landmarks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "oceanCountry")
+    private Set<geodb.entity.Ocean> oceans = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -94,14 +94,6 @@ public class Country {
         this.countryPopulationSize = countryPopulationSize;
     }
 
-    public City getCountryCity() {
-        return countryCity;
-    }
-
-    public void setCountryCity(City countryCity) {
-        this.countryCity = countryCity;
-    }
-
     public Continent getCountryContinent() {
         return countryContinent;
     }
@@ -110,28 +102,36 @@ public class Country {
         this.countryContinent = countryContinent;
     }
 
-    public Currency getCountryCurrency() {
-        return countryCurrency;
+    public Set<City> getCities() {
+        return cities;
     }
 
-    public void setCountryCurrency(Currency countryCurrency) {
-        this.countryCurrency = countryCurrency;
+    public void setCities(Set<City> cities) {
+        this.cities = cities;
     }
 
-    public LandMark getCountryLandMark() {
-        return countryLandMark;
+    public Set<geodb.entity.Currency> getCurrencies() {
+        return currencies;
     }
 
-    public void setCountryLandMark(LandMark countryLandMark) {
-        this.countryLandMark = countryLandMark;
+    public void setCurrencies(Set<geodb.entity.Currency> currencies) {
+        this.currencies = currencies;
     }
 
-    public Ocean getCountryOcean() {
-        return countryOcean;
+    public Set<LandMark> getLandmarks() {
+        return landmarks;
     }
 
-    public void setCountryOcean(Ocean countryOcean) {
-        this.countryOcean = countryOcean;
+    public void setLandmarks(Set<LandMark> landmarks) {
+        this.landmarks = landmarks;
+    }
+
+    public Set<geodb.entity.Ocean> getOceans() {
+        return oceans;
+    }
+
+    public void setOceans(Set<geodb.entity.Ocean> oceans) {
+        this.oceans = oceans;
     }
 
 }
