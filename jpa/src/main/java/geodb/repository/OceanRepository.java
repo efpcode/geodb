@@ -69,7 +69,9 @@ public class OceanRepository implements Crudable {
             var o = entityManager.createQuery(queryDisplay, Ocean.class)
                     .getResultList();
             o.forEach(ocean -> {
+                System.out.println("OceanID: " + ocean.getId());
                 System.out.println("Name: " + ocean.getOceanName());
+                System.out.println("CountryID: " + ocean.getOceanCountry().getId());
             });
         });
     }
