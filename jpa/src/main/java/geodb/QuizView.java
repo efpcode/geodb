@@ -58,9 +58,4 @@ public class QuizView implements Viewable {
 
     }
 
-    public static void main(String[] args) {
-        QuizView q = new QuizView();
-        q.promptView();
-    }
-
 }

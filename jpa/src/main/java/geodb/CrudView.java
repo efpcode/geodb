@@ -5,10 +5,6 @@ import java.util.List;
 public class CrudView implements Viewable {
     Crudable table;
 
-    CrudView(){
-
-    }
-
     CrudView( Crudable table ) {
         this.table = table;
     }
@@ -74,11 +70,5 @@ public class CrudView implements Viewable {
 
         }
     }
-
-    public static void main(String[] args) {
-        CrudView view = new CrudView();
-        view.promptView();
-    }
-
 
 }

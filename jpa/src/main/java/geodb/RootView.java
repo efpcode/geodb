@@ -62,6 +62,8 @@ public class RootView implements Viewable {
         System.out.println(options.get(0));
         System.out.println();
 
+        System.out.println("\nOr Select an Option Below:\n");
+
         for (int i = 1; i < options.size(); i++) {
             System.out.println(i + ". " + options.get(i));
 
