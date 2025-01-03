@@ -126,6 +126,7 @@ public class ContinentRepository implements Crudable {
 
             System.out.println("=== List of Continents ===");
             continents.forEach(continent -> {
+                System.out.println("Continent ID: " + continent.getId());
                 System.out.println("Continent Name: " + continent.getContinentName());
                 System.out.println("Continent Area: " + formatter.format(continent.getContinentArea()) + " square kilometers");
                 System.out.println("--------------------------");
