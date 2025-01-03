@@ -77,7 +77,7 @@ VALUES
 INSERT INTO country(countryCode, countryName, countryArea, countryNeighbor, countryPopulationSize, countryContinent)
 VALUES
     ('EG', 'Egypt', 1002450.0, 'Libia, Sudan, Israel',112700000,1),
-    ('IN', 'India', 3287263.0, 'Afghanistan,  Bangladesh, Bhutan, China, Maldives, Myanmar, Nepal, Pakistan, Sri Lanka',1429000000.0,2);
+    ('IN', 'India', 3287263.0, 'Afghanistan,  Bangladesh, Bhutan, China, Maldives, Myanmar, Nepal, Pakistan, Sri Lanka',1429000000,2);
 
 INSERT INTO city (cityCountry, cityName, cityPopulationSize, cityArea, cityCapital)
 VALUES
