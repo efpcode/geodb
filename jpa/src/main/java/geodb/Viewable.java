@@ -1,9 +1,9 @@
 package geodb;
 
 public interface Viewable {
-    void goToView(String viewName);
-    void goBackToView();
-    void goBackToMainView();
+    Viewable goToView(String viewName);
+    Viewable goBackToView();
+    Viewable goBackToMainView();
     void goToExitView();
     void promptView();
 }

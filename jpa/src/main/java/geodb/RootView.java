@@ -1,24 +1,39 @@
 package geodb;
-import geodb.ViewNotImplementedYet.*;
+
+import java.util.List;
 
 public class RootView implements Viewable {
     @Override
-    public void goToView(String viewName) {
+    public Viewable goToView(String viewName) {
+        try {
+
+        return switch (viewName) {
+            case "Quiz" -> new QuizView();
+            case "Table" -> new TableView();
+            default -> throw new IllegalArgumentException("Unknown view: " + viewName);
+        };
+        }catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this;
+        }
 
     }
 
     @Override
-    public void goBackToView() {
+    public Viewable goBackToView() {
+        return this;
 
     }
 
     @Override
-    public void goBackToMainView() {
+    public Viewable goBackToMainView() {
+        return this;
 
     }
 
     @Override
     public void goToExitView() {
+        System.exit(0);
 
     }
 
@@ -34,18 +49,24 @@ public class RootView implements Viewable {
                 """;
         System.out.println(banner);
 
-
-
-    }
-
-    public void optionsAvailable(){
+        System.out.println("Available options are: ");
+        optionsAvailable();
 
 
 
     }
 
-    public static void main(String[] args) {
-        RootView v = new RootView();
-        v.promptView();
+    public void optionsAvailable() {
+        List<String> options = List.of("Type: 'Quiz' or 'Table' to navigate to menu",
+                "Teleport to Main Menu", "Exit", "Go Back to Previous Menu");
+        System.out.println(options.get(0));
+        System.out.println();
+
+        for (int i = 1; i < options.size(); i++) {
+            System.out.println(i + ". " + options.get(i));
+
+        }
+
     }
+
 }
