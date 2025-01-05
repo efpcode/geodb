@@ -10,13 +10,13 @@ import java.util.Scanner;
 
 public class GeoQuiz {
 
-    private Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public void startQuiz() {
-
         EntityManager entityManager = JPAUtil.getEntityManager();
 
         try {
+            System.out.println("Debug: Entering startQuiz method");
 
             List<Continent> continents = entityManager.createQuery("from Continent", Continent.class).getResultList();
             List<Country> countries = entityManager.createQuery("from Country", Country.class).getResultList();
@@ -26,17 +26,15 @@ public class GeoQuiz {
             List<geodb.entity.Currency> currencies = entityManager.createQuery("from Currency", geodb.entity.Currency.class).getResultList();
 
             whichIsLargestByArea(countries);
+            cityLargestByPopulation(cities);
 
         } finally {
             entityManager.close();
         }
-
     }
 
     public void whichIsLargestByArea(List<Country> countries) {
-
         Random random = new Random();
-        Scanner answer = new Scanner(System.in);
 
         Country randomCountry1 = countries.get(random.nextInt(countries.size()));
         Country randomCountry2;
@@ -68,37 +66,85 @@ public class GeoQuiz {
         System.out.println(question);
 
         System.out.print("Enter your choice (1, 2, or 3): ");
-        int userChoice = Integer.parseInt(answer.nextLine());
+        int choice = sc.nextInt();
 
-        Country chosenCountry;
-        switch (userChoice) {
-            case 1:
-                chosenCountry = randomCountry1;
-                break;
-            case 2:
-                chosenCountry = randomCountry2;
-                break;
-            case 3:
-                chosenCountry = randomCountry3;
-                break;
-            default:
-                System.out.println("Invalid choice! Please enter 1, 2, or 3.");
-                return;
-        }
-
-        if (chosenCountry.equals(largestCountry)) {
-            System.out.println("Correct! " + largestCountry.getCountryName() + " is the largest by area.");
+        if (choice < 1 || choice > 3) {
+            System.out.println("Invalid choice. Please select 1, 2, or 3.");
         } else {
-            System.out.println("Wrong! The correct answer is " + largestCountry.getCountryName() + ".");
+            Country chosenCountry = switch (choice) {
+                case 1 -> randomCountry1;
+                case 2 -> randomCountry2;
+                case 3 -> randomCountry3;
+                default -> null;
+            };
+
+            if (chosenCountry.equals(largestCountry)) {
+                System.out.println("Correct! " + largestCountry.getCountryName() + " is the largest by area.");
+            } else {
+                System.out.println("Wrong! The correct answer is " + largestCountry.getCountryName() + ".");
+            }
         }
     }
 
-
     public void cityLargestByPopulation(List<City> cities) {
+        Random random = new Random();
 
+        City randomCity1 = cities.get(random.nextInt(cities.size()));
+        City randomCity2;
+        City randomCity3;
+
+        do {
+            randomCity2 = cities.get(random.nextInt(cities.size()));
+        } while (randomCity2.equals(randomCity1));
+
+        do {
+            randomCity3 = cities.get(random.nextInt(cities.size()));
+        } while (randomCity3.equals(randomCity1) || randomCity3.equals(randomCity2));
+
+        City largestCity = randomCity1;
+        if (randomCity2.getCityPopulationSize() > largestCity.getCityPopulationSize()) {
+            largestCity = randomCity2;
+        }
+        if (randomCity3.getCityPopulationSize() > largestCity.getCityPopulationSize()) {
+            largestCity = randomCity3;
+        }
+
+        String question = """
+                Which of these cities has the largest population?
+                1: %s
+                2: %s
+                3: %s
+                """.formatted(randomCity1.getCityName(), randomCity2.getCityName(), randomCity3.getCityName());
+
+        System.out.println(question);
+
+        System.out.print("Enter your choice (1, 2, or 3): ");
+        int choice = sc.nextInt();
+
+        if (choice < 1 || choice > 3) {
+            System.out.println("Invalid choice. Please select 1, 2, or 3.");
+        } else {
+            City selectedCity = switch (choice) {
+                case 1 -> randomCity1;
+                case 2 -> randomCity2;
+                case 3 -> randomCity3;
+                default -> null;
+            };
+
+            if (selectedCity.equals(largestCity)) {
+                System.out.println("Correct! " + largestCity.getCityName() + " has the largest population.");
+            } else {
+                System.out.println("Wrong answer. The correct answer is " + largestCity.getCityName() + ".");
+            }
+        }
     }
 
     public void whereIsLandmark(List<LandMark> landmarks) {
+
+        Random random = new Random();
+        LandMark randomLandMark1 = landmarks.get(random.nextInt(landmarks.size()));
+
+
 
     }
 
