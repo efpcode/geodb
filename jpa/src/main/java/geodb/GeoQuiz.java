@@ -58,10 +58,14 @@ public class GeoQuiz {
             largestCountry = randomCountry3;
         }
 
-        System.out.println("Which of these three countries is the largest by area?");
-        System.out.println("1: " + randomCountry1.getCountryName());
-        System.out.println("2: " + randomCountry2.getCountryName());
-        System.out.println("3: " + randomCountry3.getCountryName());
+        String question = """
+                Which of these three countries is the largest by area?
+                1: %s
+                2: %s
+                3: %s
+                """.formatted(randomCountry1.getCountryName(), randomCountry2.getCountryName(), randomCountry3.getCountryName());
+
+        System.out.println(question);
 
         System.out.print("Enter your choice (1, 2, or 3): ");
         int userChoice = Integer.parseInt(answer.nextLine());
