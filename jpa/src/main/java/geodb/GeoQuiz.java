@@ -23,11 +23,12 @@ public class GeoQuiz {
             List<LandMark> landmarks = entityManager.createQuery("from LandMark", LandMark.class).getResultList();
             List<City> cities = entityManager.createQuery("from City", City.class).getResultList();
             List<Ocean> oceans = entityManager.createQuery("from Ocean", Ocean.class).getResultList();
-            List<geodb.entity.Currency> currencies = entityManager.createQuery("from Currency", geodb.entity.Currency.class).getResultList();
+            List<Currency> currencies = entityManager.createQuery("from Currency", Currency.class).getResultList();
 
             whichIsLargestByArea(countries);
             cityLargestByPopulation(cities);
             whereIsLandmark(landmarks);
+            whatCurrency(currencies);
 
         } finally {
             entityManager.close();
@@ -187,6 +188,28 @@ public class GeoQuiz {
 
         if (currencies == null || currencies.isEmpty()) {
             System.out.println("No currencies available for the quiz.");
+        }
+
+        Random random = new Random();
+        Currency randomCurrency = currencies.get(random.nextInt(currencies.size()));
+        String expectedCountryName = randomCurrency.getCurrencyCode();
+
+        System.out.println("What country has " + randomCurrency.getCurrencyCode() + " as currency?");
+
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        System.out.print("Your answer: ");
+        String answer = sc.nextLine();
+
+        if (answer == null || answer.trim().isEmpty()) {
+            System.out.println("Please provide a valid answer.");
+        }
+        if (expectedCountryName.equalsIgnoreCase(answer.trim())) {
+            System.out.println("Correct! \"" + randomCurrency.getCurrencyCode() + "\" is in " + expectedCountryName + ".");
+        } else {
+            System.out.println("Incorrect \"" + randomCurrency.getCurrencyCode() + "\" is in " + expectedCountryName + ".");
         }
 
     }
