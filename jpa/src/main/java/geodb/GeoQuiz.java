@@ -29,6 +29,7 @@ public class GeoQuiz {
             cityLargestByPopulation(cities);
             whereIsLandmark(landmarks);
             whatCurrency(currencies);
+            whichHasOceanNextTo(countries);
 
         } finally {
             entityManager.close();
@@ -193,7 +194,7 @@ public class GeoQuiz {
 
         Random random = new Random();
         geodb.entity.Currency randomCurrency = currencies.get(random.nextInt(currencies.size()));
-        String expectedCountryName = randomCurrency.getCurrencyCountry().getCountryName(); // Assuming Currency has a Country field
+        String expectedCountryName = randomCurrency.getCurrencyCountry().getCountryName();
 
         System.out.println("What country has " + randomCurrency.getCurrencyName() + " as currency?");
 
@@ -216,11 +217,11 @@ public class GeoQuiz {
         }
     }
 
-//     5.Which of these 2 Countries does NOT have the Indian Ocean next to them?
-    public void whichHasOceanNextTo(List<Ocean> oceans, List<Country> countries) {
+    public void whichHasOceanNextTo(List<Country> countries) {
 
-        if (oceans == null || oceans.isEmpty()) {
-            System.out.println("No oceans available for the quiz.");
+        if (countries == null || countries.size() < 2) {
+            System.out.println("Not enough countries available for the quiz.");
+            return;
         }
 
         Random random = new Random();
@@ -232,29 +233,33 @@ public class GeoQuiz {
             country2 = countries.get(random.nextInt(countries.size()));
         } while (country2.equals(country1));
 
-        boolean country1HasIndianOcean = country1.getOceans("Indian Ocean");
-        boolean country2HasIndianOcean = country2.("Indian Ocean");
+        boolean country1HasIndianOcean = country1.getOceans().stream()
+                .anyMatch(ocean -> "Indian Ocean".equalsIgnoreCase(ocean.getOceanName()));
+
+        boolean country2HasIndianOcean = country2.getOceans().stream()
+                .anyMatch(ocean -> "Indian Ocean".equalsIgnoreCase(ocean.getOceanName()));
 
         if (country1HasIndianOcean == country2HasIndianOcean) {
             System.out.println("Both countries either have or do not have the Indian Ocean. Trying again...");
-            whichHasOceanNextTo(oceans, countries);
+            whichHasOceanNextTo(countries);
             return;
         }
 
         System.out.printf("""
-            Which of these two countries does NOT have the Indian Ocean next to them?
-            1: %s
-            2: %s
-            """, country1.getCountryName(), country2.getCountryName());
+                Which of these two countries does NOT have the Indian Ocean next to them?
+                1: %s
+                2: %s
+                """, country1.getCountryName(), country2.getCountryName());
 
         System.out.print("Enter your choice (1 or 2): ");
         int choice = sc.nextInt();
 
         Country chosenCountry = (choice == 1) ? country1 : country2;
-        boolean correct = !chosenCountry.("Indian Ocean");
+        boolean correct = chosenCountry.getOceans().stream()
+                .noneMatch(ocean -> "Indian Ocean".equalsIgnoreCase(ocean.getOceanName()));
 
         System.out.println(correct
-                ? "Correct! " + chosenCountry.getCountryName() + " does NOT have the Indian Ocean next to them."
+                ? "Correct! " + chosenCountry.getCountryName() + " does not have the Indian Ocean next to them."
                 : "Wrong! The correct answer is " + (choice == 1 ? country2.getCountryName() : country1.getCountryName()) + ".");
     }
 
