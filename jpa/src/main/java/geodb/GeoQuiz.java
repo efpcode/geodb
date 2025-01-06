@@ -27,6 +27,7 @@ public class GeoQuiz {
 
             whichIsLargestByArea(countries);
             cityLargestByPopulation(cities);
+            whereIsLandmark(landmarks);
 
         } finally {
             entityManager.close();
@@ -34,6 +35,12 @@ public class GeoQuiz {
     }
 
     public void whichIsLargestByArea(List<Country> countries) {
+
+        if (countries == null || countries.isEmpty()) {
+            System.out.println("No countries available for the quiz.");
+            return;
+        }
+
         Random random = new Random();
 
         Country randomCountry1 = countries.get(random.nextInt(countries.size()));
@@ -87,6 +94,12 @@ public class GeoQuiz {
     }
 
     public void cityLargestByPopulation(List<City> cities) {
+
+        if (cities == null || cities.isEmpty()) {
+            System.out.println("No cities available for the quiz.");
+            return;
+        }
+
         Random random = new Random();
 
         City randomCity1 = cities.get(random.nextInt(cities.size()));
@@ -141,10 +154,34 @@ public class GeoQuiz {
 
     public void whereIsLandmark(List<LandMark> landmarks) {
 
+        if (landmarks == null || landmarks.isEmpty()) {
+            System.out.println("No landmarks available for the quiz.");
+            return;
+        }
+
         Random random = new Random();
-        LandMark randomLandMark1 = landmarks.get(random.nextInt(landmarks.size()));
+        LandMark randomLandMark = landmarks.get(random.nextInt(landmarks.size()));
+        String expectedCountryName = randomLandMark.getLandMarkCountry().getCountryName();
 
+        System.out.println("In which country is the landmark \"" + randomLandMark.getLandMarkName() + "\" located?");
 
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        System.out.print("Your answer: ");
+        String answer = sc.nextLine();
+
+        if (answer == null || answer.trim().isEmpty()) {
+            System.out.println("Please provide a valid answer.");
+            return;
+        }
+
+        if (expectedCountryName.equalsIgnoreCase(answer.trim())) {
+            System.out.println("Correct! \"" + randomLandMark.getLandMarkName() + "\" is in " + expectedCountryName + ".");
+        } else {
+            System.out.println("Incorrect. \"" + randomLandMark.getLandMarkName() + "\" is in " + expectedCountryName + ".");
+        }
     }
 
     public void whatCurrency(List<Currency> currencies) {
