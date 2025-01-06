@@ -10,9 +10,9 @@ public class RootView implements Viewable {
         return switch (viewName) {
             case "Quiz" -> new QuizView();
             case "Table" -> new TableView();
-            default -> throw new IllegalArgumentException("Unknown view: " + viewName);
+            default -> throw new ViewNotImplementedYet("Unknown view: " + viewName);
         };
-        }catch (IllegalArgumentException e) {
+        }catch (ViewNotImplementedYet e) {
             System.out.println(e.getMessage());
             return this;
         }
@@ -48,27 +48,20 @@ public class RootView implements Viewable {
                      \\/  \\/      \\___| |_|  \\___|  \\___/  |_| |_| |_|  \\___|    \\__|  \\___/     \\_____|  \\___|  \\___/  |_____/  |____/\s
                 """;
         System.out.println(banner);
+        System.out.println("\n");
 
-        System.out.println("Available options are: ");
         optionsAvailable();
+        ViewUtil.defaultOptions();
+
 
 
 
     }
 
     public void optionsAvailable() {
-        List<String> options = List.of("Type: 'Quiz' or 'Table' to navigate to menu",
-                "Teleport to Main Menu", "Exit", "Go Back to Previous Menu");
-        System.out.println(options.get(0));
-        System.out.println();
-
-        System.out.println("\nOr Select an Option Below:\n");
-
-        for (int i = 1; i < options.size(); i++) {
-            System.out.println(i + ". " + options.get(i));
+        String option = "Type: 'Quiz' or 'Table' to navigate to menu";
+        System.out.println(option);
 
         }
-
-    }
 
 }

@@ -15,10 +15,10 @@ public class TableView implements Viewable{
                 case "Currency" -> new CurrencyRepository();
                 case "LandMark" -> new LandMarkRepository();
                 case "Ocean" -> new OceanRepository();
-                default -> throw new IllegalArgumentException("Unknown view name " + viewName);
+                default -> throw new ViewNotImplementedYet("Unknown view name " + viewName);
             };
             return new CrudView(table);
-        }catch (IllegalArgumentException e) {
+        }catch (ViewNotImplementedYet e) {
             System.out.println(e.getMessage());
             return this;
         }
@@ -54,27 +54,20 @@ public class TableView implements Viewable{
                 """;
 
         System.out.println(banner);
-
+        System.out.println("\n");
         allOptions();
+        ViewUtil.defaultOptions();
 
     }
 
     public void allOptions() {
         List<String> tables = List.of("City", "Continent", "Country", "Currency", "Land Mark", "Ocean");
-        List<String> options = List.of("Teleport to Main Menu", "Exit", "Go Back to Previous Menu");
 
         System.out.println("Type a Table Name Below: ");
         for (String table : tables) {
             System.out.println("\t" + table);
         }
 
-        System.out.println(".-.-".repeat(9));
-
-        System.out.println("\nOr Select a Navigation Option Below\n");
-        for (int i = 1; i <= options.size(); i++) {
-            System.out.println(i + ". " + options.get(i - 1));
-
-        }
     }
 
 }

@@ -40,22 +40,18 @@ public class QuizView implements Viewable {
                                                                                                                                                                     \s
                 """;
         System.out.println(banner);
+        System.out.println("\n");
         optionsAvailable();
+        ViewUtil.defaultOptions();
 
 
     }
 
     public void optionsAvailable() {
-        List<String> options = List.of("Type: Start to run quiz",
-                "Teleport to Main Menu", "Exit", "Go Back to Previous Menu");
-        System.out.println(options.get(0));
-        System.out.println();
-
-        for (int i = 1; i < options.size(); i++) {
-            System.out.println(i + ". " + options.get(i));
+        String option ="Type: Start to run quiz";
+        System.out.println(option);
 
         }
 
-    }
 
 }

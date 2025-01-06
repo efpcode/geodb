@@ -51,24 +51,18 @@ public class CrudView implements Viewable {
                                                                                                                                                 |_|                                   \s
                 """;
         System.out.println(banner);
+        System.out.println("\n");
         allOptions();
+        ViewUtil.defaultOptions();
     }
     public void allOptions() {
         List<String> cruds = List.of("Insert", "Update", "Delete", "Display");
-        List<String> options = List.of("Teleport to Main Menu", "Exit", "Go Back to Previous Menu");
 
         System.out.println("Type Any of the Operations Available Below: ");
         for (String crud : cruds) {
             System.out.println("\t" + crud);
         }
 
-        System.out.println(".-.-".repeat(10));
-
-        System.out.println("\nOr Select a Navigation Option Below\n");
-        for (int i = 1; i <= options.size(); i++) {
-            System.out.println(i + ". " + options.get(i - 1));
-
-        }
     }
 
 }
