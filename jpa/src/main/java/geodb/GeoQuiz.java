@@ -168,7 +168,6 @@ public class GeoQuiz {
         if (sc.hasNextLine()) {
             sc.nextLine();
         }
-
         System.out.print("Your answer: ");
         String answer = sc.nextLine();
 
@@ -185,6 +184,10 @@ public class GeoQuiz {
     }
 
     public void whatCurrency(List<Currency> currencies) {
+
+        if (currencies == null || currencies.isEmpty()) {
+            System.out.println("No currencies available for the quiz.");
+        }
 
     }
 
