@@ -13,10 +13,10 @@ public class GeoQuiz {
     private static final Scanner sc = new Scanner(System.in);
 
     public void startQuiz() {
+
         EntityManager entityManager = JPAUtil.getEntityManager();
 
         try {
-            System.out.println("Debug: Entering startQuiz method");
 
             List<Continent> continents = entityManager.createQuery("from Continent", Continent.class).getResultList();
             List<Country> countries = entityManager.createQuery("from Country", Country.class).getResultList();
@@ -145,7 +145,6 @@ public class GeoQuiz {
         LandMark randomLandMark1 = landmarks.get(random.nextInt(landmarks.size()));
 
 
-
     }
 
     public void whatCurrency(List<Currency> currencies) {
@@ -159,6 +158,7 @@ public class GeoQuiz {
     public static void main(String[] args) {
         GeoQuiz geoQuiz = new GeoQuiz();
         geoQuiz.startQuiz();
+
 
     }
 }
