@@ -1,6 +1,5 @@
 package geodb;
 
-import java.util.List;
 
 public class RootView implements Viewable {
     @Override
