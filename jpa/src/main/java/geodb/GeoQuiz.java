@@ -135,6 +135,7 @@ public class GeoQuiz {
 
         System.out.print("Enter your choice (1, 2, or 3): ");
         int choice = sc.nextInt();
+        sc.nextLine();
 
         if (choice < 1 || choice > 3) {
             System.out.println("Invalid choice. Please select 1, 2, or 3.");
@@ -167,10 +168,6 @@ public class GeoQuiz {
 
         System.out.println("In which country is the landmark \"" + randomLandMark.getLandMarkName() + "\" located?");
 
-        if (sc.hasNextLine()) {
-            sc.nextLine();
-        }
-
         System.out.print("Your answer: ");
         String answer = sc.nextLine();
 
@@ -197,10 +194,6 @@ public class GeoQuiz {
         String expectedCountryName = randomCurrency.getCurrencyCountry().getCountryName();
 
         System.out.println("What country has " + randomCurrency.getCurrencyName() + " as currency?");
-
-        if (sc.hasNextLine()) {
-            sc.nextLine();
-        }
 
         System.out.print("Your answer: ");
         String answer = sc.nextLine();
