@@ -3,10 +3,8 @@ package geodb;
 import geodb.entity.*;
 import jakarta.persistence.EntityManager;
 
+import java.util.*;
 import java.util.Currency;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 
 public class GeoQuiz {
 
@@ -74,24 +72,32 @@ public class GeoQuiz {
 
         System.out.println(question);
 
-        System.out.print("Enter your choice (1, 2, or 3): ");
-        int choice = sc.nextInt();
+        int choice = -1;
 
-        if (choice < 1 || choice > 3) {
-            System.out.println("Invalid choice. Please select 1, 2, or 3.");
-        } else {
-            Country chosenCountry = switch (choice) {
-                case 1 -> randomCountry1;
-                case 2 -> randomCountry2;
-                case 3 -> randomCountry3;
-                default -> null;
-            };
-
-            if (chosenCountry.equals(largestCountry)) {
-                System.out.println("Correct! " + largestCountry.getCountryName() + " is the largest by area.");
-            } else {
-                System.out.println("Wrong! The correct answer is " + largestCountry.getCountryName() + ".");
+        while (choice < 1 || choice > 3) {
+            System.out.print("Enter your choice (1, 2, or 3): ");
+            try {
+                choice = sc.nextInt();
+                if (choice < 1 || choice > 3) {
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number (1, 2, or 3).");
+                sc.next();
             }
+        }
+
+        Country chosenCountry = switch (choice) {
+            case 1 -> randomCountry1;
+            case 2 -> randomCountry2;
+            case 3 -> randomCountry3;
+            default -> null;
+        };
+
+        if (chosenCountry.equals(largestCountry)) {
+            System.out.println("Correct! " + largestCountry.getCountryName() + " is the largest by area.");
+        } else {
+            System.out.println("Wrong! The correct answer is " + largestCountry.getCountryName() + ".");
         }
     }
 
@@ -133,25 +139,35 @@ public class GeoQuiz {
 
         System.out.println(question);
 
-        System.out.print("Enter your choice (1, 2, or 3): ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = -1;
+        while (true) {
+            System.out.print("Enter your choice (1, 2, or 3): ");
+            try {
+                choice = sc.nextInt();
+                sc.nextLine();
 
-        if (choice < 1 || choice > 3) {
-            System.out.println("Invalid choice. Please select 1, 2, or 3.");
-        } else {
-            City selectedCity = switch (choice) {
-                case 1 -> randomCity1;
-                case 2 -> randomCity2;
-                case 3 -> randomCity3;
-                default -> null;
-            };
-
-            if (selectedCity.equals(largestCity)) {
-                System.out.println("Correct! " + largestCity.getCityName() + " has the largest population.");
-            } else {
-                System.out.println("Wrong answer. The correct answer is " + largestCity.getCityName() + ".");
+                if (choice < 1 || choice > 3) {
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number (1, 2, or 3).");
+                sc.nextLine();
             }
+        }
+
+        City selectedCity = switch (choice) {
+            case 1 -> randomCity1;
+            case 2 -> randomCity2;
+            case 3 -> randomCity3;
+            default -> null;
+        };
+
+        if (selectedCity.equals(largestCity)) {
+            System.out.println("Correct! " + largestCity.getCityName() + " has the largest population.");
+        } else {
+            System.out.println("Wrong answer. The correct answer is " + largestCity.getCityName() + ".");
         }
     }
 
@@ -168,15 +184,21 @@ public class GeoQuiz {
 
         System.out.println("In which country is the landmark \"" + randomLandMark.getLandMarkName() + "\" located?");
 
-        System.out.print("Your answer: ");
-        String answer = sc.nextLine();
+        String answer = null;
+        while (true) {
+            System.out.print("Your answer: ");
+            answer = sc.nextLine().trim();
 
-        if (answer == null || answer.trim().isEmpty()) {
-            System.out.println("Please provide a valid answer.");
-            return;
+            if (answer.isEmpty()) {
+                System.out.println("Invalid input. Blank input not accepted.");
+            } else if (answer.matches("\\d+")) {
+                System.out.println("Invalid input. Please do not enter numbers.");
+            } else {
+                break;
+            }
         }
 
-        if (expectedCountryName.equalsIgnoreCase(answer.trim())) {
+        if (expectedCountryName.equalsIgnoreCase(answer)) {
             System.out.println("Correct! \"" + randomLandMark.getLandMarkName() + "\" is in " + expectedCountryName + ".");
         } else {
             System.out.println("Incorrect. \"" + randomLandMark.getLandMarkName() + "\" is in " + expectedCountryName + ".");
@@ -195,15 +217,21 @@ public class GeoQuiz {
 
         System.out.println("What country has " + randomCurrency.getCurrencyName() + " as currency?");
 
-        System.out.print("Your answer: ");
-        String answer = sc.nextLine();
+        String answer = null;
+        while (true) {
+            System.out.print("Your answer: ");
+            answer = sc.nextLine().trim();
 
-        if (answer == null || answer.trim().isEmpty()) {
-            System.out.println("Please provide a valid answer.");
-            return;
+            if (answer.isEmpty()) {
+                System.out.println("Invalid input. Please provide a valid answer (letters only).");
+            } else if (answer.matches("\\d+")) {
+                System.out.println("Invalid input. Please do not enter numbers.");
+            } else {
+                break;
+            }
         }
 
-        if (expectedCountryName.equalsIgnoreCase(answer.trim())) {
+        if (expectedCountryName.equalsIgnoreCase(answer)) {
             System.out.println("Correct! \"" + randomCurrency.getCurrencyName() + "\" belongs to " + expectedCountryName + ".");
         } else {
             System.out.println("Incorrect! \"" + randomCurrency.getCurrencyName() + "\" belongs to " + expectedCountryName + ".");
@@ -211,7 +239,6 @@ public class GeoQuiz {
     }
 
     public void whichHasOceanNextTo(List<Country> countries) {
-
         if (countries == null || countries.size() < 2) {
             System.out.println("Not enough countries available for the quiz.");
             return;
@@ -244,8 +271,20 @@ public class GeoQuiz {
                 2: %s
                 """, country1.getCountryName(), country2.getCountryName());
 
-        System.out.print("Enter your choice (1 or 2): ");
-        int choice = sc.nextInt();
+        int choice = -1;
+
+        while (choice != 1 && choice != 2) {
+            System.out.print("Enter your choice (1 or 2): ");
+            try {
+                choice = sc.nextInt();
+                if (choice != 1 && choice != 2) {
+                    System.out.println("Invalid choice. Please enter 1 or 2.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number (1 or 2).");
+                sc.next();
+            }
+        }
 
         Country chosenCountry = (choice == 1) ? country1 : country2;
         boolean correct = chosenCountry.getOceans().stream()
@@ -255,7 +294,6 @@ public class GeoQuiz {
                 ? "Correct! " + chosenCountry.getCountryName() + " does not have the Indian Ocean next to them."
                 : "Wrong! The correct answer is " + (choice == 1 ? country2.getCountryName() : country1.getCountryName()) + ".");
     }
-
 
     public static void main(String[] args) {
         GeoQuiz geoQuiz = new GeoQuiz();
