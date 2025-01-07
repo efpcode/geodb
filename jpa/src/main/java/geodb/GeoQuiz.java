@@ -10,6 +10,8 @@ public class GeoQuiz {
 
     private static final Scanner sc = new Scanner(System.in);
 
+    private int score = 0;
+
     public void startQuiz() {
 
         EntityManager entityManager = JPAUtil.getEntityManager();
@@ -28,6 +30,8 @@ public class GeoQuiz {
             whereIsLandmark(landmarks);
             whatCurrency(currencies);
             whichHasOceanNextTo(countries);
+
+            System.out.println("You got: " + score + " points!");
 
         } finally {
             entityManager.close();
@@ -96,6 +100,7 @@ public class GeoQuiz {
 
         if (chosenCountry.equals(largestCountry)) {
             System.out.println("Correct! " + largestCountry.getCountryName() + " is the largest by area.");
+            score++;
         } else {
             System.out.println("Wrong! The correct answer is " + largestCountry.getCountryName() + ".");
         }
@@ -166,6 +171,7 @@ public class GeoQuiz {
 
         if (selectedCity.equals(largestCity)) {
             System.out.println("Correct! " + largestCity.getCityName() + " has the largest population.");
+            score++;
         } else {
             System.out.println("Wrong answer. The correct answer is " + largestCity.getCityName() + ".");
         }
@@ -200,6 +206,7 @@ public class GeoQuiz {
 
         if (expectedCountryName.equalsIgnoreCase(answer)) {
             System.out.println("Correct! \"" + randomLandMark.getLandMarkName() + "\" is in " + expectedCountryName + ".");
+            score++;
         } else {
             System.out.println("Incorrect. \"" + randomLandMark.getLandMarkName() + "\" is in " + expectedCountryName + ".");
         }
@@ -233,6 +240,7 @@ public class GeoQuiz {
 
         if (expectedCountryName.equalsIgnoreCase(answer)) {
             System.out.println("Correct! \"" + randomCurrency.getCurrencyName() + "\" belongs to " + expectedCountryName + ".");
+            score++;
         } else {
             System.out.println("Incorrect! \"" + randomCurrency.getCurrencyName() + "\" belongs to " + expectedCountryName + ".");
         }
@@ -293,6 +301,10 @@ public class GeoQuiz {
         System.out.println(correct
                 ? "Correct! " + chosenCountry.getCountryName() + " does not have the Indian Ocean next to them."
                 : "Wrong! The correct answer is " + (choice == 1 ? country2.getCountryName() : country1.getCountryName()) + ".");
+
+        if (correct) {
+            score++;
+        }
     }
 
     public static void main(String[] args) {
