@@ -306,10 +306,4 @@ public class GeoQuiz {
             score++;
         }
     }
-
-    public static void main(String[] args) {
-        GeoQuiz geoQuiz = new GeoQuiz();
-        geoQuiz.startQuiz();
-
-    }
 }
