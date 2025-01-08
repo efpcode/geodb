@@ -2,9 +2,25 @@ package geodb;
 
 
 public class QuizView implements Viewable {
+    GeoQuiz quiz;
+
+    public QuizView(GeoQuiz quiz) {
+        this.quiz = quiz;
+    }
+
     @Override
     public Viewable goToView(String viewName) {
-        return this;
+        try{
+            switch (viewName){
+                case "Start" -> this.quiz.startQuiz();
+                default -> throw new ViewNotImplementedYet("");
+            }
+            return this;
+
+        } catch ( ViewNotImplementedYet e) {
+            System.out.println(e.getMessage());
+            return this;
+        }
 
     }
 
@@ -29,14 +45,14 @@ public class QuizView implements Viewable {
     @Override
     public void promptView() {
         String banner = """
-                   ____    _    _   _____   ______  ______  ______    _____               __      __             _____   _                   ____    _        ______\s
-                  / __ \\  | |  | | |_   _| |___  / |___  / |  ____|  / ____|       /\\     \\ \\    / /     /\\     |_   _| | |          /\\     |  _ \\  | |      |  ____|
-                 | |  | | | |  | |   | |      / /     / /  | |__    | (___        /  \\     \\ \\  / /     /  \\      | |   | |         /  \\    | |_) | | |      | |__  \s
-                 | |  | | | |  | |   | |     / /     / /   |  __|    \\___ \\      / /\\ \\     \\ \\/ /     / /\\ \\     | |   | |        / /\\ \\   |  _ <  | |      |  __| \s
-                 | |__| | | |__| |  _| |_   / /__   / /__  | |____   ____) |    / ____ \\     \\  /     / ____ \\   _| |_  | |____   / ____ \\  | |_) | | |____  | |____\s
-                  \\___\\_\\  \\____/  |_____| /_____| /_____| |______| |_____/    /_/    \\_\\     \\/     /_/    \\_\\ |_____| |______| /_/    \\_\\ |____/  |______| |______|
-                                                                                                                                                                    \s
-                                                                                                                                                                    \s
+                   _  _        _____   ______    ____      _____    ____       ____    _    _   _____   ______      _  _  \s
+                 _| || |_     / ____| |  ____|  / __ \\    |  __ \\  |  _ \\     / __ \\  | |  | | |_   _| |___  /    _| || |_\s
+                |_  __  _|   | |  __  | |__    | |  | |   | |  | | | |_) |   | |  | | | |  | |   | |      / /    |_  __  _|
+                 _| || |_    | | |_ | |  __|   | |  | |   | |  | | |  _ <    | |  | | | |  | |   | |     / /      _| || |_\s
+                |_  __  _|   | |__| | | |____  | |__| |   | |__| | | |_) |   | |__| | | |__| |  _| |_   / /__    |_  __  _|
+                  |_||_|      \\_____| |______|  \\____/    |_____/  |____/     \\___\\_\\  \\____/  |_____| /_____|     |_||_| \s
+                                                                                                                          \s
+                                                                                                                          \s 
                 """;
         System.out.println(banner);
         System.out.println("\n");
