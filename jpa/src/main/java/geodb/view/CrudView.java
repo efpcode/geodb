@@ -1,4 +1,6 @@
-package geodb;
+package geodb.view;
+
+import geodb.*;
 
 import java.util.List;
 

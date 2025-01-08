@@ -1,10 +1,10 @@
-package geodb;
+package geodb.view;
 
 import geodb.repository.*;
 
 import java.util.List;
 
-public class TableView implements Viewable{
+public class TableView implements Viewable {
     @Override
     public Viewable goToView(String viewName) {
         try {

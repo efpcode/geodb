@@ -1,11 +1,9 @@
 package geodb;
 
-import jakarta.persistence.EntityManager;
+import geodb.view.RootView;
+import geodb.view.Viewable;
 
 import java.util.Scanner;
-
-import static geodb.JPAUtil.getEntityManager;
-import static geodb.JPAUtil.inTransaction;
 
 public class Main {
     Viewable currentView;
