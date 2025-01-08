@@ -1,7 +1,6 @@
 package geodb.repository;
 
 import geodb.Crudable;
-import geodb.JPAUtil;
 import geodb.entity.City;
 import geodb.entity.Country;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,16 +10,10 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import static geodb.JPAUtil.getEntityManager;
 import static geodb.JPAUtil.inTransaction;
 
 public class CityRepository implements Crudable {
     private static Scanner scanner = new Scanner(System.in);
-
-    public static void main(String[] args) {
-        CityRepository cityRepository = new CityRepository();
-        cityRepository.insertToTable();
-    }
 
     @Override
     public void insertToTable() {
@@ -111,7 +104,7 @@ public class CityRepository implements Crudable {
     @Override
     public void deleteRowInTable() {
 
-        System.out.println("Enter the id of the country you want to delete: ");
+        System.out.println("Enter the id of the city you want to delete: ");
         int cityID = scanner.nextInt();
         scanner.nextLine();
 
