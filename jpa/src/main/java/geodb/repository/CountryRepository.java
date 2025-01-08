@@ -147,7 +147,7 @@ public class CountryRepository implements Crudable {
 
         System.out.println("Please enter new country code");
         String countryCode = scanner.nextLine();
-        if(countryCode == null || countryCode.isEmpty() || !isAlpha(countryCode)) {
+        if (countryCode == null || countryCode.isEmpty() || !isAlpha(countryCode)) {
             throw new IllegalArgumentException("Value must be a valid country code and not empty");
         }
 
