@@ -7,7 +7,7 @@ public class RootView implements Viewable {
         try {
 
         return switch (viewName) {
-            case "Quiz" -> new QuizView();
+            case "Quiz" -> new QuizView(new GeoQuiz());
             case "Table" -> new TableView();
             default -> throw new ViewNotImplementedYet("Unknown view: " + viewName);
         };
