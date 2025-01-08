@@ -51,6 +51,7 @@ public class ContinentRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        displayTable();
         System.out.println("Enter the ID of the continent you want to update:");
         int continentID = sc.nextInt();
         sc.nextLine();
@@ -90,6 +91,7 @@ public class ContinentRepository implements Crudable {
 
     @Override
     public void deleteRowInTable() {
+        displayTable();
         System.out.println("Enter the ID of the continent you want to delete:");
         long continentId = sc.nextLong();
         sc.nextLine();

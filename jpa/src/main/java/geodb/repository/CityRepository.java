@@ -71,6 +71,7 @@ public class CityRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        displayTable();
 
         System.out.println("Enter the id of the city you want to update: ");
         int cityId = scanner.nextInt();
@@ -99,10 +100,12 @@ public class CityRepository implements Crudable {
         boolean isCapital = isCapitalInput.equals("Y");
 
         inputUpdateTable(cityId, cityName, population, area, isCapital);
+        displayTable();
     }
 
     @Override
     public void deleteRowInTable() {
+        displayTable();
 
         System.out.println("Enter the id of the city you want to delete: ");
         int cityID = scanner.nextInt();
@@ -118,6 +121,7 @@ public class CityRepository implements Crudable {
                 entityManager.remove(city);
             }
         });
+        displayTable();
     }
 
     @Override
