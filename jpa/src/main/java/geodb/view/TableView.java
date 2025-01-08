@@ -13,7 +13,7 @@ public class TableView implements Viewable {
                 case "Continent" -> new ContinentRepository();
                 case "Country" -> new CountryRepository();
                 case "Currency" -> new CurrencyRepository();
-                case "LandMark" -> new LandMarkRepository();
+                case "Land Mark" -> new LandMarkRepository();
                 case "Ocean" -> new OceanRepository();
                 default -> throw new ViewNotImplementedYet("Unknown view name " + viewName);
             };

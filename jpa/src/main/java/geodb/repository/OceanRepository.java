@@ -1,11 +1,8 @@
 package geodb.repository;
 
 import geodb.Crudable;
-import geodb.JPAUtil;
 import geodb.entity.Ocean;
 import geodb.entity.Country;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Id;
 
 import java.util.Scanner;
 
@@ -13,7 +10,6 @@ import static geodb.JPAUtil.inTransaction;
 
 
 public class OceanRepository implements Crudable {
-    EntityManager em = JPAUtil.getEntityManager();
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -45,8 +41,10 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        displayTable();
         System.out.println("Enter the ID number of the ocean you want to update");
         int updateTableStringOceanID = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Enter the new name/change of the Ocean");
         String updateTableStringOcean = scanner.nextLine();
 
@@ -55,11 +53,20 @@ public class OceanRepository implements Crudable {
             return;
         }
 
-        String query = "UPDATE Ocean SET oceanName = '" + updateTableStringOcean + "' WHERE oceanName = '" + updateTableStringOceanID + "' ";
-
         inTransaction(entityManager -> {
-            var o = entityManager.createQuery(query).executeUpdate();
+            Ocean updateOcean = entityManager.find(Ocean.class, updateTableStringOceanID);
+            System.out.println(updateOcean);
+            if (updateOcean != null) {
+                updateOcean.setOceanName(updateTableStringOcean);
+                entityManager.merge(updateOcean);
+
+            }
+
         });
+
+        displayTable();
+
+
     }
 
     @Override
@@ -78,6 +85,7 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void deleteRowInTable() {
+        displayTable();
         System.out.println("Enter the name of the Ocean you want to delete");
         String deleteRowInTableOcean = scanner.next();
 
@@ -86,9 +94,13 @@ public class OceanRepository implements Crudable {
             return;
         }
 
-        String query = "DELETE FROM Ocean WHERE oceanName = '" + deleteRowInTableOcean + "' ";
         inTransaction(entityManager -> {
-            var o = entityManager.createQuery(query).executeUpdate();
+            Ocean deletedOcean = entityManager.find(Ocean.class, deleteRowInTableOcean);
+            if (deletedOcean != null) {
+                entityManager.remove(deletedOcean);
+            }
         });
+
+        displayTable();
     }
 }

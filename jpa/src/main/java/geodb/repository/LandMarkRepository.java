@@ -52,6 +52,7 @@ public class LandMarkRepository implements Crudable {
 
     @Override
     public void updateTable() {
+        displayTable();
         System.out.println("Enter the ID of the landmark you want to update:");
         long landmarkId = sc.nextLong();
         sc.nextLine();
@@ -93,6 +94,7 @@ public class LandMarkRepository implements Crudable {
 
     @Override
     public void deleteRowInTable() {
+        displayTable();
         System.out.println("Enter the ID of the landmark you want to delete:");
         long landmarkId = sc.nextLong();
         sc.nextLine();
