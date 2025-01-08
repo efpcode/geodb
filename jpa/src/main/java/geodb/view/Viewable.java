@@ -1,4 +1,4 @@
-package geodb;
+package geodb.view;
 
 public interface Viewable {
     Viewable goToView(String viewName);

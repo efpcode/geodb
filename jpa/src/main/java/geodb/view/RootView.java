@@ -1,5 +1,7 @@
-package geodb;
+package geodb.view;
 
+
+import geodb.GeoQuiz;
 
 public class RootView implements Viewable {
     @Override
