@@ -25,10 +25,7 @@ public class ContinentRepository implements Crudable {
             return;
         }
 
-        if (!Pattern.compile("[a-zA-Z\\s]*").matcher(continentName).matches()) {
-            System.out.println("Only alphabetic characters are allowed");
-            return;
-        }
+        if (checkCharacters(continentName)) return;
 
         System.out.println("Enter the area of the continent in square kilometers:");
         double continentArea = sc.nextDouble();
@@ -64,10 +61,7 @@ public class ContinentRepository implements Crudable {
                     System.out.println("Enter a new name for the continent (blank to keep current name):");
                     String newName = sc.nextLine().trim();
 
-                    if (!Pattern.compile("[a-zA-Z\\s]*").matcher(newName).matches()) {
-                        System.out.println("Only alphabetic characters are allowed");
-                        return;
-                    }
+                    if (checkCharacters(newName)) return;
 
                     System.out.println("Enter new area in square kilometers for the continent:");
                     double newArea = sc.nextDouble();
@@ -88,6 +82,7 @@ public class ContinentRepository implements Crudable {
             }
         });
     }
+
 
     @Override
     public void deleteRowInTable() {
@@ -136,6 +131,14 @@ public class ContinentRepository implements Crudable {
         } finally {
             entityManager.close();
         }
+    }
+
+    private static boolean checkCharacters(String newName) {
+        if (!Pattern.compile("[a-zA-Z\\s]*").matcher(newName).matches()) {
+            System.out.println("Only alphabetic characters are allowed");
+            return true;
+        }
+        return false;
     }
 
 }
