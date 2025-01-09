@@ -128,6 +128,7 @@ public class LandMarkRepository implements Crudable {
 
             System.out.println("Landmark Table:");
             landmarks.forEach(landmark -> {
+                System.out.println("Landmark ID: " + landmark.getId());
                 System.out.println("Landmark: " + landmark.getLandMarkName() +
                         " Country: " + landmark.getLandMarkCountry().getCountryName());
             });

@@ -9,8 +9,8 @@ public class RootView implements Viewable {
         try {
 
         return switch (viewName) {
-            case "Quiz" -> new QuizView(new GeoQuiz());
-            case "Table" -> new TableView();
+            case "Quiz", "q" -> new QuizView(new GeoQuiz());
+            case "Table", "t" -> new TableView();
             default -> throw new ViewNotImplementedYet("Unknown view: " + viewName);
         };
         }catch (ViewNotImplementedYet e) {
@@ -60,7 +60,7 @@ public class RootView implements Viewable {
     }
 
     public void viewOptions() {
-        String option = "Type: 'Quiz' or 'Table' to navigate to menu";
+        String option = "Type: 'Quiz' (q) or 'Table' (t) to navigate to menu";
         System.out.println(option);
 
         }
