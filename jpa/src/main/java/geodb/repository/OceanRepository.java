@@ -14,6 +14,7 @@ public class OceanRepository implements Crudable {
 
     @Override
     public void insertToTable() {
+        displayTable();
         System.out.println("Enter the ID of the country");
         int insertToTableCountryID = scanner.nextInt();
 

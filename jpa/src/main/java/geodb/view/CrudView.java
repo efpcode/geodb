@@ -54,10 +54,10 @@ public class CrudView implements Viewable {
                 """;
         System.out.println(banner);
         System.out.println("\n");
-        allOptions();
+        viewOptions();
         ViewUtil.defaultOptions();
     }
-    public void allOptions() {
+    public void viewOptions() {
         List<String> cruds = List.of("Insert", "Update", "Delete", "Display");
 
         System.out.println("Type Any of the Operations Available Below: ");

@@ -51,7 +51,7 @@ public class RootView implements Viewable {
         System.out.println(banner);
         System.out.println("\n");
 
-        optionsAvailable();
+        viewOptions();
         ViewUtil.defaultOptions();
 
 
@@ -59,7 +59,7 @@ public class RootView implements Viewable {
 
     }
 
-    public void optionsAvailable() {
+    public void viewOptions() {
         String option = "Type: 'Quiz' or 'Table' to navigate to menu";
         System.out.println(option);
 

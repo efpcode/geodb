@@ -55,12 +55,12 @@ public class TableView implements Viewable {
 
         System.out.println(banner);
         System.out.println("\n");
-        allOptions();
+        viewOptions();
         ViewUtil.defaultOptions();
 
     }
 
-    public void allOptions() {
+    public void viewOptions() {
         List<String> tables = List.of("City", "Continent", "Country", "Currency", "Land Mark", "Ocean");
 
         System.out.println("Type a Table Name Below: ");

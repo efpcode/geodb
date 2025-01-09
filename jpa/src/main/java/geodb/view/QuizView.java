@@ -58,13 +58,13 @@ public class QuizView implements Viewable {
                 """;
         System.out.println(banner);
         System.out.println("\n");
-        optionsAvailable();
+        viewOptions();
         ViewUtil.defaultOptions();
 
 
     }
 
-    public void optionsAvailable() {
+    public void viewOptions() {
         String option ="Type: Start to run quiz";
         System.out.println(option);
 
