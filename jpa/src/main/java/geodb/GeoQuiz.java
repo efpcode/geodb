@@ -32,6 +32,7 @@ public class GeoQuiz {
             whichHasOceanNextTo(countries);
 
             System.out.println("You got: " + score + " points!");
+            score = 0;
 
         } finally {
             entityManager.close();
@@ -267,10 +268,17 @@ public class GeoQuiz {
         boolean country2HasIndianOcean = country2.getOceans().stream()
                 .anyMatch(ocean -> "Indian Ocean".equalsIgnoreCase(ocean.getOceanName()));
 
-        if (country1HasIndianOcean == country2HasIndianOcean) {
-            System.out.println("Both countries either have or do not have the Indian Ocean. Trying again...");
-            whichHasOceanNextTo(countries);
-            return;
+        if (country1HasIndianOcean && country2HasIndianOcean) {
+            do {
+                country2 = countries.get(random.nextInt(countries.size()));
+            } while (country2.equals(country1) || !country2.getOceans().stream()
+                    .anyMatch(ocean -> "Indian Ocean".equalsIgnoreCase(ocean.getOceanName())));
+
+        } else if (!country1HasIndianOcean && !country2HasIndianOcean) {
+            do {
+                country2 = countries.get(random.nextInt(countries.size()));
+            } while (country2.equals(country1) || !country2.getOceans().stream()
+                    .anyMatch(ocean -> "Indian Ocean".equalsIgnoreCase(ocean.getOceanName())));
         }
 
         System.out.printf("""
@@ -306,4 +314,5 @@ public class GeoQuiz {
             score++;
         }
     }
+
 }
