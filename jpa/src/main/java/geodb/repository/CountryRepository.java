@@ -164,7 +164,7 @@ public class CountryRepository implements Crudable {
             throw new IllegalArgumentException("Value must be a positive integer and greater than 0");
         }
 
-        System.out.println("Please update neighboring land countries separated with comma for multiple countries");
+        System.out.println("Please update neighboring countries separated with comma for multiple entries");
         String neighboringCountry = scanner.nextLine();
         if (neighboringCountry == null || neighboringCountry.isEmpty() || !isAlpha(neighboringCountry)) {
             throw new IllegalArgumentException("Value must be a valid country code and not empty");
