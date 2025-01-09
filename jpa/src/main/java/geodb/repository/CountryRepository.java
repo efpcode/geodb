@@ -19,7 +19,6 @@ public class CountryRepository implements Crudable {
     @Override
     public void insertToTable() {
         Country country = new Country();
-        ContinentRepository continentRepository = new ContinentRepository();
 
         System.out.println("Please enter the new country you want to insert to the country table");
         String countryName = scanner.nextLine();
@@ -42,7 +41,7 @@ public class CountryRepository implements Crudable {
             throw new IllegalArgumentException("Value must be a positive integer and greater than 0");
         }
 
-        System.out.println("Please enter the neighboring land countries separated by a comma");
+        System.out.println("Please enter the neighboring countries separated by a comma");
         String neighboringCountry = scanner.nextLine();
 
         if (neighboringCountry == null || neighboringCountry.isEmpty() || !isAlpha(neighboringCountry)) {
