@@ -22,7 +22,6 @@ public class GeoQuiz {
             List<Country> countries = entityManager.createQuery("from Country", Country.class).getResultList();
             List<LandMark> landmarks = entityManager.createQuery("from LandMark", LandMark.class).getResultList();
             List<City> cities = entityManager.createQuery("from City", City.class).getResultList();
-            List<Ocean> oceans = entityManager.createQuery("from Ocean", Ocean.class).getResultList();
             List<geodb.entity.Currency> currencies = entityManager.createQuery("from Currency", geodb.entity.Currency.class).getResultList();
 
             whichIsLargestByArea(countries);
