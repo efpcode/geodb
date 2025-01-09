@@ -24,10 +24,8 @@ public class LandMarkRepository implements Crudable {
             System.out.println("Landmark name cannot be empty.");
             return;
         }
-        if (!Pattern.compile("[a-zA-Z\\s]*").matcher(landmarkName).matches()) {
-            System.out.println("Only alphabetic characters are allowed");
-            return;
-        }
+
+        if (checkCharacters(landmarkName)) return;
 
         System.out.println("Enter the ID of the country:");
         long countryId = sc.nextLong();
@@ -49,6 +47,7 @@ public class LandMarkRepository implements Crudable {
             System.out.println("Landmark inserted: " + landmark.getLandMarkName() + "in country " + country.getCountryName());
         });
     }
+
 
     @Override
     public void updateTable() {
@@ -74,10 +73,7 @@ public class LandMarkRepository implements Crudable {
                 System.out.println("Enter a new name for the landmark (Leave blank to keep the current name):");
                 String newLandmarkName = sc.nextLine().trim();
 
-                if (!Pattern.compile("[a-zA-Z\\s]*").matcher(newLandmarkName).matches()) {
-                    System.out.println("Only alphabetic characters are allowed");
-                    return;
-                }
+                if (checkCharacters(newLandmarkName)) return;
 
                 if (!newLandmarkName.isEmpty()) {
                     landmark.setLandMarkName(newLandmarkName);
@@ -141,4 +137,11 @@ public class LandMarkRepository implements Crudable {
         }
     }
 
+    private static boolean checkCharacters(String landmarkName) {
+        if (!Pattern.compile("[a-zA-Z\\s]*").matcher(landmarkName).matches()) {
+            System.out.println("Only alphabetic characters are allowed");
+            return true;
+        }
+        return false;
+    }
 }
