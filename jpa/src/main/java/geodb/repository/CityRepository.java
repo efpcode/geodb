@@ -65,7 +65,8 @@ public class CityRepository implements Crudable {
                         throw new EntityNotFoundException("Country not found with ID: " + countryId);
                     }
                     city.setCityCountry(country);
-                    entityManager.persist(city);});
+                    entityManager.persist(city);
+                });
 
     }
 
