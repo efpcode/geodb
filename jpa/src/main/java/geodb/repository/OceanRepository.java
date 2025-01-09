@@ -18,7 +18,6 @@ public class OceanRepository implements Crudable {
         System.out.println("Enter the ID of the country");
         int insertToTableCountryID = scanner.nextInt();
 
-        // A scanner.nextLine that will be skipped on purpose. So that Row 28 will be called
         scanner.nextLine();
 
         System.out.println("Enter the name of the New Ocean you want to insert");
