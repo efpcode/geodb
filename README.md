@@ -6,7 +6,7 @@ Its theme is countries and includes other elements such as cities, continents am
 
 ### Features of the program
 * Use CRUD to modify data.
-* Display all data in DB
+* Display all data in DB.
 * Run a quiz that is based on randomized data in the DB
 
 ### Techniques
